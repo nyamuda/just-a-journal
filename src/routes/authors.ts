@@ -9,7 +9,8 @@ dotenv.config();
 
 router.route("/authors")
     .get((req: Request, res: Response) => {
-        // #swagger.summary = 'Get all the authors...'
+        // #swagger.tags = ['Authors']
+        // #swagger.summary = 'Get a list of all the authors...'
         getAuthors(req, res);
     })
 

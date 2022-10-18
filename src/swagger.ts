@@ -14,18 +14,50 @@ const doc = {
             $email: "email@example.com",
             $password: "helloworld"
         },
-        // UpdateQuote: {
-        //     quote: "update a quote",
-        //     author: "Tatenda Nyamuda"
-        // },
+        addPost: {
+            $title: "Title of the post",
+            $content: "The content of the post",
+            $tags: "e.g [medicine,technology,economics]",
+            summary: "A brief summary of the post",
+            status: "publish or draft. The default is publish",
+            category: "The category in which the post belongs. The default is 'miscellaneous'",
+        },
+        updatePost: {
+            title: "Title of the post",
+            content: "The content of the post",
+            tags: "[medicine,technology,economics]",
+            summary: "A brief summary of the post",
+            status: "publish or draft",
+            category: "The category in which the post belongs.",
+        },
+        addComment: {
+            $content: "The comment",
+            $post_id: "The id of the post the comment is for",
+        },
+        updateComment: {
+            content: "The comment",
+            post_id: "The id of the post the comment is for",
+        },
+        addCategory: {
+            $name: "Name of the category"
+        },
+        updateCategory: {
+            name: "Name of the category"
+        },
+        addTag: {
+            $name: "Name of the category"
+        },
+        updateTag: {
+            name: "Name of the category"
+        },
         // registerUser: {
         //     name: "John Doe",
         //     email: "email@example.com",
         //     password:"helloworld"
         // },
         loginUser: {
-            email: "email@example.com",
-            password: "helloworld"
+            $email: "email@example.com",
+            $password: "helloworld"
         }
     },
     securityDefinitions: {

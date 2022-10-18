@@ -5,7 +5,9 @@ import * as bcrypt from "bcrypt";
 
 
 export let loginAuthor = async (req: Request, res: Response) => {
-    let { email, password } = req.body;
+    let email: string = req.body.email || req.query.email;
+    let password: string = req.body.password || req.query.password;
+
 
     //validate login details
     let valid_details = validateLoginDetails(email, password);

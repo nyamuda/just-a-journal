@@ -18,30 +18,50 @@
     }
   },
   "paths": {
-    "/login": {
+    "/authors/login": {
       "post": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Login a user...",
         "description": "",
         "parameters": [
           {
-            "name": "obj",
-            "in": "body",
-            "description": "Login a user",
+            "name": "email",
+            "in": "query",
+            "description": "The email for login",
+            "required": true,
+            "type": "string",
             "schema": {
-              "$ref": "#/definitions/loginUser"
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login",
+            "required": true,
+            "type": "string",
+            "schema": {
+              "type": "string"
             }
           }
         ],
         "responses": {}
       }
     },
-    "/register": {
+    "/authors/register": {
       "post": {
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Register a new author...",
         "description": "",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "Register a new user",
+            "description": "If the registration process is successful, an access token is returned.\n   You can use this token to access various endpoints of the API.\n    The token expires in 24 hours.",
             "schema": {
               "$ref": "#/definitions/registerUser"
             }
@@ -52,7 +72,10 @@
     },
     "/authors": {
       "get": {
-        "summary": "Get all the authors...",
+        "tags": [
+          "Authors"
+        ],
+        "summary": "Get a list of all the authors...",
         "description": "",
         "parameters": [],
         "responses": {}
@@ -93,7 +116,11 @@
           "type": "string",
           "example": "helloworld"
         }
-      }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
     }
   }
 }

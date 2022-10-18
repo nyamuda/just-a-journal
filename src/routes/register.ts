@@ -5,13 +5,20 @@ let router = express.Router();
 
 
 
-router.route("/register")
+router.route("/authors/register")
     .post((req: Request, res: Response) => {
-        /*    #swagger.parameters['obj'] = {
+        /*
+        #swagger.tags = ['Authors']
+        #swagger.summary = 'Register a new author...'    
+        #swagger.parameters['obj'] = {
                        in: 'body',
-                       description: 'Register a new user',
+                       description: 'If the registration process is successful, an access token is returned.\n
+                        You can use this token to access various endpoints of the API.\n 
+                        The token expires in 24 hours.',
                        schema: { $ref: '#/definitions/registerUser' }
-               } */
+               } 
+
+               */
         registerAuthor(req, res);
     })
 

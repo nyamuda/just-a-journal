@@ -10,10 +10,10 @@ let postSchema = new mongoose.Schema(
         tags: { type: Array },
         summary: { type: String },
         status: { type: String },
-        comment_count: { type: Number },
-        like_count: { type: Number },
+        comment_count: { type: Number, default: 0 },
+        like_count: { type: Number, default: 0 },
         author_id: { type: Number },
-        category_id: { type: Number },
+        category: { type: String, default: "miscellaneous" },
 
     },
     {
