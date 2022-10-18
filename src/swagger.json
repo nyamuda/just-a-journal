@@ -23,7 +23,7 @@
         "tags": [
           "Authors"
         ],
-        "summary": "Login a user...",
+        "summary": "Login an author...",
         "description": "",
         "parameters": [
           {
@@ -61,7 +61,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "If the registration process is successful, an access token is returned.\n   You can use this token to access various endpoints of the API.\n    The token expires in 24 hours.",
+            "description": "<p>If the registration process is successful, an access token is returned.    You can use this token to access various endpoints of the API.    The token expires in 24 hours.</p>",
             "schema": {
               "$ref": "#/definitions/registerUser"
             }
@@ -78,6 +78,130 @@
         "summary": "Get a list of all the authors...",
         "description": "",
         "parameters": [],
+        "responses": {}
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Get all the blog posts",
+        "description": "<p>The GET request only returns all the blogs written by the logged in author or user.</p>",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Add a blog post",
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "The logged in author/user id will be added to the post if the POST request is successful.\n   <h3>Fields</h3>\n   <ul>   <li><p><b>title</b> &#187; A string : Required. The title of the post.</p></li>   <li><p><b>content</b> &#187; A string : Required. The content of the post.</p></li>   <li><p><b>tags</b> &#187; An array/list : Optional. All the tags related to the blog post.</p></li>   <li><p><b>summary</b> &#187; A string : Optional. A brief summary of the post.</p></li>   <li>   <p><b>status</b> &#187; A string : Optional. The status of the blog post.The status can either be <i>published</i> or <i>draft</i>. The default status is <i>published</i>.</p>   </li>   <li>   <p><b>category</b> &#187; A string : Optional. The category in which the post belongs. The default is <i>miscellaneous</i>. To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>   </li>   </ul>",
+            "schema": {
+              "$ref": "#/definitions/addPost"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog post by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "put": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Update an existing blog post",
+        "description": "<p>You can only update blogs you",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/updatePost"
+            }
+          }
+        ],
+        "responses": {}
+      },
+      "delete": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Delete a blog post",
+        "description": "<p>You can only delete blogs you",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/posts/findByTags": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog posts by tags",
+        "description": "Tags to filter by",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/tags"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/posts/findByStatus": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog posts by status",
+        "description": "<p>At the moment, there are only two available statuses: <i>draft</i> and <i>publish</i>.</p>",
+        "parameters": [
+          {
+            "name": "status",
+            "schema": {
+              "$ref": "#/definitions/statuses"
+            },
+            "in": "query"
+          }
+        ],
         "responses": {}
       }
     }
@@ -105,6 +229,156 @@
         "password"
       ]
     },
+    "addPost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Title of the post"
+        },
+        "content": {
+          "type": "string",
+          "example": "The content of the post"
+        },
+        "tags": {
+          "type": "array",
+          "example": [
+            "medicine",
+            "technology",
+            "economics"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "summary": {
+          "type": "string",
+          "example": "A brief summary of the post"
+        },
+        "status": {
+          "type": "string",
+          "example": "publish or draft. The default is 'publish'"
+        },
+        "category": {
+          "type": "string",
+          "example": "The category in which the post belongs. The default is 'miscellaneous'"
+        }
+      },
+      "required": [
+        "title",
+        "content"
+      ]
+    },
+    "updatePost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Title of the post"
+        },
+        "content": {
+          "type": "string",
+          "example": "The content of the post"
+        },
+        "tags": {
+          "type": "array",
+          "example": [
+            "medicine",
+            "technology",
+            "economics"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "summary": {
+          "type": "string",
+          "example": "A brief summary of the post"
+        },
+        "status": {
+          "type": "string",
+          "example": "publish or draft"
+        },
+        "category": {
+          "type": "string",
+          "example": "The category in which the post belongs."
+        }
+      }
+    },
+    "addComment": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "example": "The comment"
+        },
+        "post_id": {
+          "type": "number",
+          "example": 12345
+        }
+      },
+      "required": [
+        "content",
+        "post_id"
+      ]
+    },
+    "updateComment": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "example": "The comment"
+        }
+      },
+      "required": [
+        "content"
+      ]
+    },
+    "addCategory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Name of the category"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "updateCategory": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Name of the category"
+        }
+      }
+    },
+    "addTag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Name of the category"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "updateTag": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Name of the category"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
     "loginUser": {
       "type": "object",
       "properties": {
@@ -121,6 +395,66 @@
         "email",
         "password"
       ]
+    },
+    "tags": {
+      "type": "array",
+      "example": [
+        "medicine",
+        "technology",
+        "economics"
+      ],
+      "items": {
+        "type": "string"
+      }
+    },
+    "statuses": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "status"
+        },
+        "in": {
+          "type": "string",
+          "example": "query"
+        },
+        "description": {
+          "type": "string",
+          "example": "Status values that need to be considered for filter"
+        },
+        "required": {
+          "type": "boolean",
+          "example": false
+        },
+        "explode": {
+          "type": "boolean",
+          "example": true
+        },
+        "schema": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "string"
+            },
+            "default": {
+              "type": "string",
+              "example": "available"
+            },
+            "enum": {
+              "type": "array",
+              "example": [
+                "available",
+                "pending",
+                "sold"
+              ],
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

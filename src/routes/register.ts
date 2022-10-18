@@ -12,9 +12,9 @@ router.route("/authors/register")
         #swagger.summary = 'Register a new author...'    
         #swagger.parameters['obj'] = {
                        in: 'body',
-                       description: 'If the registration process is successful, an access token is returned.\n
-                        You can use this token to access various endpoints of the API.\n 
-                        The token expires in 24 hours.',
+                       description: '<p>If the registration process is successful, an access token is returned. 
+                       You can use this token to access various endpoints of the API. 
+                       The token expires in 24 hours.</p>',
                        schema: { $ref: '#/definitions/registerUser' }
                } 
 

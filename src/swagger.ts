@@ -1,5 +1,6 @@
 import swaggerAutogen from 'swagger-autogen';
 import path from 'path';
+import { string } from 'joi';
 
 const doc = {
     info: {
@@ -17,26 +18,25 @@ const doc = {
         addPost: {
             $title: "Title of the post",
             $content: "The content of the post",
-            $tags: "e.g [medicine,technology,economics]",
+            tags: ["medicine", "technology", "economics"],
             summary: "A brief summary of the post",
-            status: "publish or draft. The default is publish",
+            status: "publish or draft. The default is 'publish'",
             category: "The category in which the post belongs. The default is 'miscellaneous'",
         },
         updatePost: {
             title: "Title of the post",
             content: "The content of the post",
-            tags: "[medicine,technology,economics]",
+            tags: ["medicine", "technology", "economics"],
             summary: "A brief summary of the post",
             status: "publish or draft",
             category: "The category in which the post belongs.",
         },
         addComment: {
             $content: "The comment",
-            $post_id: "The id of the post the comment is for",
+            $post_id: 12345
         },
         updateComment: {
-            content: "The comment",
-            post_id: "The id of the post the comment is for",
+            $content: "The comment",
         },
         addCategory: {
             $name: "Name of the category"
@@ -48,7 +48,7 @@ const doc = {
             $name: "Name of the category"
         },
         updateTag: {
-            name: "Name of the category"
+            $name: "Name of the category"
         },
         // registerUser: {
         //     name: "John Doe",
@@ -58,6 +58,24 @@ const doc = {
         loginUser: {
             $email: "email@example.com",
             $password: "helloworld"
+        },
+        tags: ["medicine", "technology", "economics"],
+        statuses: {
+
+            "name": "status",
+            "in": "query",
+            "description": "Status values that need to be considered for filter",
+            "required": false,
+            "explode": true,
+            "schema": {
+                "type": "string",
+                "default": "available",
+                "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                ]
+            }
         }
     },
     securityDefinitions: {
@@ -76,7 +94,7 @@ const endpointsFiles = [
     path.join(__dirname, 'routes/login.ts'),
     path.join(__dirname, 'routes/register.ts'),
     path.join(__dirname, 'routes/authors.ts'),
-    // path.join(__dirname, 'routes/posts.ts'),
+    path.join(__dirname, 'routes/posts.ts')
     // path.join(__dirname, 'routes/comments.ts'),
     // path.join(__dirname, 'routes/tags.ts'),
     // path.join(__dirname, 'routes/categories.ts'),

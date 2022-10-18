@@ -9,7 +9,7 @@ let postSchema = new mongoose.Schema(
         content: { type: String },
         tags: { type: Array },
         summary: { type: String },
-        status: { type: String },
+        status: { type: String, default: "publish" },
         comment_count: { type: Number, default: 0 },
         like_count: { type: Number, default: 0 },
         author_id: { type: Number },
