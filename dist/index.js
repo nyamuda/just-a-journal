@@ -31,7 +31,10 @@ const dotenv = __importStar(require("dotenv"));
 const index_1 = require("./models/index");
 const routes = __importStar(require("./routes/index"));
 const cors_1 = __importDefault(require("cors"));
+const shelljs_1 = __importDefault(require("shelljs"));
 dotenv.config();
+//generate the swagger.json file
+shelljs_1.default.exec("npm run swagger");
 let app = (0, express_1.default)();
 const PORT = process.env.PORT || 8000;
 app.use((0, cors_1.default)());

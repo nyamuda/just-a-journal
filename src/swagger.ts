@@ -1,7 +1,6 @@
 import swaggerAutogen from 'swagger-autogen';
 import path from 'path';
-import * as dotenv from 'dotenv';
-dotenv.config();
+
 
 let api_host: string = process.env.ApiHost!;
 let api_scheme: string = process.env.Scheme!;
@@ -12,8 +11,10 @@ const doc = {
         "swagger": "2.0",
         description: 'An API to manage your blogs'
     },
-    host: `${api_host}`,
-    schemes: [`${api_scheme}`],
+    // host: 'localhost:3000',
+    // schemes: ['http'],
+    host: 'just-a-journal.onrender.com',
+    schemes: ['https'],
     definitions: {
         registerUser: {
             $name: "your full name",
@@ -69,7 +70,7 @@ const doc = {
     securityDefinitions: {
         oAuthGithub: {
             type: 'oauth2',
-            authorizationUrl: `${api_host}/oauth/github`,
+            authorizationUrl: 'just-a-journal.onrender.com/oauth/github',
             flow: 'implicit',
 
         }
