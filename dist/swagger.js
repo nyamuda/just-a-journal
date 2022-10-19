@@ -35,7 +35,8 @@ let api_scheme = process.env.Scheme;
 const doc = {
     info: {
         title: 'Just a Journal',
-        description: 'An API to manage your blogs',
+        "swagger": "2.0",
+        description: 'An API to manage your blogs'
     },
     host: `${api_host}`,
     schemes: [`${api_scheme}`],
