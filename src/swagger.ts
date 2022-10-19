@@ -1,14 +1,18 @@
 import swaggerAutogen from 'swagger-autogen';
 import path from 'path';
-import { string } from 'joi';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+let api_host: string = process.env.ApiHost!;
+let api_scheme: string = process.env.Scheme!;
 
 const doc = {
     info: {
         title: 'Just a Journal',
         description: 'An API to manage your blogs',
     },
-    host: 'localhost:3000',
-    schemes: ['http'],
+    host: api_host,
+    schemes: [api_scheme],
     definitions: {
         registerUser: {
             $name: "your full name",
@@ -71,7 +75,7 @@ const doc = {
     }
 };
 
-const outputFile = path.join(__dirname, 'swagger.json');
+const outputFile = path.join('swagger.json');
 const endpointsFiles = [
 
     path.join(__dirname, 'routes/login.ts'),
