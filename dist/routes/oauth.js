@@ -33,10 +33,10 @@ exports.oauthRoutes = router;
 const dotenv = __importStar(require("dotenv"));
 const index_1 = require("../controllers/index");
 dotenv.config();
-router.route("/github")
+router.route("/oauth/github")
     .get((req, res) => {
     let url = `https://github.com/login/oauth/authorize?client_id=${process.env.ClientID}`;
     res.redirect(url);
 });
-router.route("/github-callback")
+router.route("/oauth/github-callback")
     .get(index_1.loginGithub);

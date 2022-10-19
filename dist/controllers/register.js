@@ -42,12 +42,12 @@ let registerAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     let valid_details = (0, functions_1.validateRegisterDetails)(name, email, password);
     //if there is an error
     if (valid_details.error) {
-        return res.status(401).json({ message: valid_details.message });
+        return res.status(400).json({ message: valid_details.message });
     }
     //check to see if there user is not already in the database
     let old_author = yield models_1.Author.findOne({ email });
     //if the user is already registered
-    if (!old_author) {
+    if (old_author) {
         return res.status(409).json({ message: "A user with that email is already registered. Please log in." });
     }
     //if there no errors

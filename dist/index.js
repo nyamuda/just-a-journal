@@ -31,21 +31,19 @@ const dotenv = __importStar(require("dotenv"));
 const index_1 = require("./models/index");
 const routes = __importStar(require("./routes/index"));
 const cors_1 = __importDefault(require("cors"));
-// import { Request } from "express";
 dotenv.config();
 let app = (0, express_1.default)();
 const PORT = process.env.PORT || 8000;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
     res.send("Welcome to Just a Journal");
-    return next();
 });
-app.use("/authors", routes.authorRoutes);
-app.use("/oauth", routes.oauthRoutes);
-app.use("/login", routes.loginRoutes);
-app.use("/register", routes.registerRoutes);
-app.use("/api-docs", routes.swaggerRoutes);
+app.use(routes.authorRoutes);
+app.use(routes.oauthRoutes);
+app.use(routes.loginRoutes);
+app.use(routes.registerRoutes);
+app.use(routes.swaggerRoutes);
 app.listen(PORT, () => {
     (0, index_1.connect_database)();
     console.log(`Application listening to port ${PORT}`);

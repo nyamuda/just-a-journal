@@ -46,7 +46,7 @@ let validateLoginDetails = (email, password) => {
         email: joi_1.default.string().email().required(),
         password: joi_1.default.string().required().min(8)
     });
-    let { value, error } = schema.validate(schema);
+    let { value, error } = schema.validate({ email, password });
     //if there is a validation error
     if (error) {
         return { error: true, message: error.details[0].message };
@@ -63,7 +63,7 @@ let validateRegisterDetails = (name, email, password) => {
         email: joi_1.default.string().email().required(),
         password: joi_1.default.string().required().min(8)
     });
-    let { value, error } = schema.validate(schema);
+    let { value, error } = schema.validate({ name, email, password });
     //if there is a validation error
     if (error) {
         return { error: true, message: error.details[0].message };

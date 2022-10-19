@@ -28,10 +28,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorRoutes = void 0;
 const express_1 = __importDefault(require("express"));
-const controllers = __importStar(require("../controllers/index"));
 let router = express_1.default.Router();
 exports.authorRoutes = router;
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
-router.route("/")
-    .get(controllers.getAuthors);
+router.route("/authors")
+    .get((req, res) => {
+    // #swagger.tags = ['Authors']
+    // #swagger.summary = 'Get a list of all the authors'
+    //#swagger.description ='<p><span style="color:red;"><b>Note:</b></span> Only admins have the authority to do this.</p>'
+    // getAuthors(req, res);
+});
+router.route("/authors/:authorId")
+    .get((req, res) => {
+    // #swagger.tags = ['Authors']
+    // #swagger.summary = 'Get an author by id'
+    // getAuthors(req, res);
+})
+    .put((req, res) => {
+    // #swagger.tags = ['Authors']
+    // #swagger.summary = 'Update an existing author'
+    // #swagger.description ='<p>Only an author with valid access token can update their details.</p>'
+    /*
+   #swagger.parameters['obj'] = {
+                 in: 'body',
+                 schema: { $ref: '#/definitions/updateUser' }
+         }
+  
+  
+  */
+    // getAuthors(req, res);
+})
+    .delete((req, res) => {
+    // #swagger.tags = ['Authors']
+    // #swagger.summary = 'Delete an existing author'
+    // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete an author.</p>'
+    // getAuthors(req, res);
+});
