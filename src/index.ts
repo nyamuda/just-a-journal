@@ -3,9 +3,11 @@ import * as dotenv from "dotenv";
 import { connect_database } from "./models/index";
 import * as routes from "./routes/index";
 import cors from "cors";
+import shell from "shelljs";
 dotenv.config();
 
-
+//generate the swagger.json file
+shell.exec("npm run swagger");
 
 
 let app = express();
@@ -23,6 +25,7 @@ app.use(routes.oauthRoutes);
 app.use(routes.loginRoutes);
 app.use(routes.registerRoutes);
 app.use(routes.swaggerRoutes);
+
 
 
 
