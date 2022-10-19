@@ -11,8 +11,8 @@ const doc = {
         title: 'Just a Journal',
         description: 'An API to manage your blogs',
     },
-    host: api_host,
-    schemes: [api_scheme],
+    host: `${api_host}`,
+    schemes: [`${api_scheme}`],
     definitions: {
         registerUser: {
             $name: "your full name",
@@ -68,7 +68,7 @@ const doc = {
     securityDefinitions: {
         oAuthGithub: {
             type: 'oauth2',
-            authorizationUrl: 'https://localhost:3000/oauth/github',
+            authorizationUrl: `${api_host}/oauth/github`,
             flow: 'implicit',
 
         }
@@ -78,13 +78,13 @@ const doc = {
 const outputFile = path.join('swagger.json');
 const endpointsFiles = [
 
-    path.join(__dirname, 'routes/login.ts'),
-    path.join(__dirname, 'routes/register.ts'),
-    path.join(__dirname, 'routes/authors.ts'),
-    path.join(__dirname, 'routes/posts.ts'),
-    path.join(__dirname, 'routes/comments.ts'),
-    path.join(__dirname, 'routes/tags.ts'),
-    path.join(__dirname, 'routes/categories.ts')
+    path.join(__dirname, 'routes/login'),
+    path.join(__dirname, 'routes/register'),
+    path.join(__dirname, 'routes/authors'),
+    path.join(__dirname, 'routes/posts'),
+    path.join(__dirname, 'routes/comments'),
+    path.join(__dirname, 'routes/tags'),
+    path.join(__dirname, 'routes/categories')
 
 
 ];
