@@ -9,7 +9,7 @@ const doc = {
     info: {
         title: 'Just a Journal',
         "swagger": "2.0",
-        description: 'An API to manage your blogs'
+        description: 'A public API to manage your blogs'
     },
     // host: 'localhost:3000',
     // schemes: ['http'],
