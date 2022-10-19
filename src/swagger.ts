@@ -15,6 +15,10 @@ const doc = {
             $email: "email@example.com",
             $password: "helloworld"
         },
+        updateUser: {
+            name: "your full name",
+            email: "email@example.com",
+        },
         addPost: {
             $title: "Title of the post",
             $content: "The content of the post",
@@ -42,7 +46,7 @@ const doc = {
             $name: "Name of the category"
         },
         updateCategory: {
-            name: "Name of the category"
+            $name: "Name of the category"
         },
         addTag: {
             $name: "Name of the category"
@@ -50,33 +54,12 @@ const doc = {
         updateTag: {
             $name: "Name of the category"
         },
-        // registerUser: {
-        //     name: "John Doe",
-        //     email: "email@example.com",
-        //     password:"helloworld"
-        // },
         loginUser: {
             $email: "email@example.com",
             $password: "helloworld"
         },
         tags: ["medicine", "technology", "economics"],
-        statuses: {
 
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": false,
-            "explode": true,
-            "schema": {
-                "type": "string",
-                "default": "available",
-                "enum": [
-                    "available",
-                    "pending",
-                    "sold"
-                ]
-            }
-        }
     },
     securityDefinitions: {
         oAuthGithub: {
@@ -94,11 +77,10 @@ const endpointsFiles = [
     path.join(__dirname, 'routes/login.ts'),
     path.join(__dirname, 'routes/register.ts'),
     path.join(__dirname, 'routes/authors.ts'),
-    path.join(__dirname, 'routes/posts.ts')
-    // path.join(__dirname, 'routes/comments.ts'),
-    // path.join(__dirname, 'routes/tags.ts'),
-    // path.join(__dirname, 'routes/categories.ts'),
-    // path.join(__dirname, 'routes/oauth.ts')
+    path.join(__dirname, 'routes/posts.ts'),
+    path.join(__dirname, 'routes/comments.ts'),
+    path.join(__dirname, 'routes/tags.ts'),
+    path.join(__dirname, 'routes/categories.ts')
 
 
 ];

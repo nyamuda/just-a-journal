@@ -11,7 +11,7 @@ router.route("/posts")
     .get((req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Get all the blog posts'
-        // #swagger.description ='<p>The GET request only returns all the blogs written by the logged in author or user.</p>'
+        // #swagger.description ='<p>The GET request only returns all the blogs written by the author or user.</p>'
         // getAuthors(req, res);
     })
     .post((req: Request, res: Response) => {
@@ -53,7 +53,7 @@ router.route("/posts/:id")
     .put((req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Update an existing blog post'
-        // #swagger.description ='<p>You can only update blogs you've written. So, only a logged-in user can update their posts.</p>'
+        // #swagger.description ='<p>You can only update blogs you've written. So, only a user with valid access token can update their posts.</p>'
         /* 
        #swagger.parameters['obj'] = {
                      in: 'body',
@@ -67,7 +67,7 @@ router.route("/posts/:id")
     .delete((req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Delete a blog post'
-        // #swagger.description ='<p>You can only delete blogs you've written. So, only a logged-in user can delete their posts.</p>'
+        // #swagger.description ='<p>You can only delete blogs you've written. So, only a user with valid access token can delete their posts.</p>'
         // getAuthors(req, res);
     })
 
@@ -95,7 +95,14 @@ router.route("/posts/findByStatus")
 
         /* 
         #swagger.parameters['status'] = {
-                     schema: { $ref: '#/definitions/statuses' }
+                     name:'status',
+                     type:'query',
+                     description: 'Status value that need to be considered for filter',
+                     required:'true',
+                     default:'publish',
+                     explode:'true',
+                     'enum':['publish','draft']
+                     
                     
              } 
 
@@ -103,6 +110,30 @@ router.route("/posts/findByStatus")
 
         // getAuthors(req, res);
     })
+
+router.route("/posts/findByCategory")
+    .get((req: Request, res: Response) => {
+        // #swagger.tags = ['Posts']
+        // #swagger.summary = 'Find blog posts by category'
+        // #swagger.description ='<p>To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>'
+
+        /* 
+        #swagger.parameters['category'] = {
+                     name:'category',
+                     type:'query',
+                     description: 'Category value that need to be considered for filter',
+                     required:'true',
+                     default:'miscellaneous',
+                     explode:'true'
+                     
+                    
+             } 
+
+        */
+
+        // getAuthors(req, res);
+    })
+
 
 
 

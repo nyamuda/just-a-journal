@@ -9,30 +9,18 @@ router.route("/authors/login")
     .post((req: Request, res: Response) => {
         /* 
          #swagger.tags = ['Authors']
-        #swagger.summary = 'Login an author...'
+        #swagger.summary = 'Login an author'
+
+
+        #swagger.parameters['obj'] = {
+                       in: 'body',
+                       description: '<p>If the login process is successful, an access token is returned. 
+                       You can use this token to access various endpoints of the API. 
+                       The token expires in 24 hours.</p>',
+                       schema: { $ref: '#/definitions/loginUser' }
+               } 
         
-        #swagger.parameters['email'] = {
-        in: 'query',
-        name:'email',
-        description: 'The email for login',
-        required:true,
-        type: 'string',
-        schema: {
-            type:'string'
-        }
-    }
-        
-        
-        #swagger.parameters['password'] = {
-        in: 'query',
-        name:'password',
-        description: 'The password for login',
-        required:true,
-        type: 'string',
-        schema: {
-            type:'string'
-        }
-        } */
+       */
         loginAuthor(req, res)
     })
 
