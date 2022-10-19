@@ -37,8 +37,8 @@ const doc = {
         title: 'Just a Journal',
         description: 'An API to manage your blogs',
     },
-    host: api_host,
-    schemes: [api_scheme],
+    host: `${api_host}`,
+    schemes: [`${api_scheme}`],
     definitions: {
         registerUser: {
             $name: "your full name",
@@ -93,20 +93,20 @@ const doc = {
     securityDefinitions: {
         oAuthGithub: {
             type: 'oauth2',
-            authorizationUrl: 'https://localhost:3000/oauth/github',
+            authorizationUrl: `${api_host}/oauth/github`,
             flow: 'implicit',
         }
     }
 };
 const outputFile = path_1.default.join('swagger.json');
 const endpointsFiles = [
-    path_1.default.join(__dirname, 'routes/login.ts'),
-    path_1.default.join(__dirname, 'routes/register.ts'),
-    path_1.default.join(__dirname, 'routes/authors.ts'),
-    path_1.default.join(__dirname, 'routes/posts.ts'),
-    path_1.default.join(__dirname, 'routes/comments.ts'),
-    path_1.default.join(__dirname, 'routes/tags.ts'),
-    path_1.default.join(__dirname, 'routes/categories.ts')
+    path_1.default.join(__dirname, 'routes/login'),
+    path_1.default.join(__dirname, 'routes/register'),
+    path_1.default.join(__dirname, 'routes/authors'),
+    path_1.default.join(__dirname, 'routes/posts'),
+    path_1.default.join(__dirname, 'routes/comments'),
+    path_1.default.join(__dirname, 'routes/tags'),
+    path_1.default.join(__dirname, 'routes/categories')
 ];
 /* NOTE: if you use the express Router, you must pass in the
    'endpointsFiles' only the root file where the route starts,
