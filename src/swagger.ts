@@ -7,6 +7,7 @@ let api_host: string = process.env.ApiHost!;
 let api_scheme: string = process.env.Scheme!;
 
 const doc = {
+    swagger: "2.0",
     info: {
         title: 'Just a Journal',
         description: 'An API to manage your blogs',
