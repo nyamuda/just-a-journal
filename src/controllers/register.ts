@@ -38,7 +38,7 @@ export let registerAuthor = async (req: Request, res: Response) => {
             return res.status(201).json({ token });
         })
         .catch(err => {
-            return res.json({ message: "Sorry, registration failed.", error: err });
+            return res.status(500).json({ message: "Sorry, registration failed.", error: err });
         })
 
 }

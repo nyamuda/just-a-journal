@@ -26,6 +26,24 @@ export type AuthorObject = {
     created_at?: Date
 }
 
+export let validateUpdateAuthor = (author: object): errorMessage => {
+
+    let schema = Joi.object({
+        name: Joi.string().min(2),
+        email: Joi.string().email()
+    })
+
+    let { value, error } = schema.validate(author);
+
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    }
+}
+
 
 export let validateLoginDetails = (email: string, password: string): errorMessage => {
 
@@ -50,7 +68,7 @@ export let validateLoginDetails = (email: string, password: string): errorMessag
 export let validateRegisterDetails = (name: string, email: string, password: string): errorMessage => {
 
     let schema = Joi.object({
-        name: Joi.string().required(),
+        name: Joi.string().required().min(2),
         email: Joi.string().email().required(),
         password: Joi.string().required().min(8)
     })

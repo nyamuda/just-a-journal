@@ -8,7 +8,14 @@ dotenv.config();
 
 
 
+
 router.route("/comments/:commentId")
+    .get((req: Request, res: Response) => {
+        // #swagger.tags = ['Comments']
+        // #swagger.summary = 'Get a comment by id'
+
+        // getAuthors(req, res);
+    })
     .put((req: Request, res: Response) => {
         // #swagger.tags = ['Comments']
         // #swagger.summary = 'Update an existing comment'
@@ -37,7 +44,7 @@ router.route("/comments/:postId")
         // #swagger.description ='<p>Get all the comments for a post by passing in the id of the post.</p>'
         // getAuthors(req, res);
     })
-   
+
 
 
 

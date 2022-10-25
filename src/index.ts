@@ -28,5 +28,5 @@ app.use(routes.swaggerRoutes);
 
 app.listen(PORT, (): void => {
     connect_database();
-    console.log(`Application listening to port ${PORT}`);
+    console.log(`App listening to port ${PORT}`);
 })

@@ -11,10 +11,10 @@ const doc = {
         "swagger": "2.0",
         description: 'A public API to manage your blogs'
     },
-    // host: 'localhost:3000',
-    // schemes: ['http'],
-    host: 'just-a-journal.onrender.com',
-    schemes: ['https'],
+    host: 'localhost:3000',
+    schemes: ['http'],
+    // host: 'just-a-journal.onrender.com',
+    // schemes: ['https'],
     definitions: {
         registerUser: {
             $name: "your full name",
