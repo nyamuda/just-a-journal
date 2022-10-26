@@ -1,6 +1,6 @@
 import { Comment, Author, Post } from "../models";
 import { Request, Response } from "express";
-import { validateComment, validateUpdateComment, getIdFromToken } from "../utils/functions";
+import { validateContent, validateUpdateContent, getIdFromToken } from "../utils/functions";
 
 
 
@@ -8,7 +8,7 @@ import { validateComment, validateUpdateComment, getIdFromToken } from "../utils
 
 export let addComment = async (req: Request, res: Response) => {
     //validate post data first
-    let valid_details = validateComment(req.body);
+    let valid_details = validateContent(req.body);
 
     //if there is an error
     if (valid_details.error) {
@@ -45,7 +45,7 @@ export let addComment = async (req: Request, res: Response) => {
 export let updateCommentById = async (req: Request, res: Response) => {
     try {
         //validate the post data
-        let valid_details = validateUpdateComment(req.body);
+        let valid_details = validateUpdateContent(req.body);
 
         //if there is an error
         if (valid_details.error) {

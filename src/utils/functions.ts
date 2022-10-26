@@ -131,7 +131,7 @@ export let validatePost = (post: object): errorMessage => {
 }
 
 
-export let validateComment = (comment: object): errorMessage => {
+export let validateContent = (comment: object): errorMessage => {
 
     let schema = Joi.object({
 
@@ -149,7 +149,8 @@ export let validateComment = (comment: object): errorMessage => {
 
 }
 
-export let validateUpdateComment = (comment: object): errorMessage => {
+
+export let validateUpdateContent = (comment: object): errorMessage => {
 
     let schema = Joi.object({
 
