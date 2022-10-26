@@ -152,7 +152,7 @@ export let validateNameUpdate = (comment: object): errorMessage => {
 
     let schema = Joi.object({
 
-        content: Joi.string().min(3)
+        name: Joi.string().min(3).required()
     })
 
     let { value, error } = schema.validate(comment);

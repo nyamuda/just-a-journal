@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getAuthors } from "../controllers/index";
+import { getAllTags, getTagById, updateTagById, deleteTagById } from "../controllers/index";
 let router = express.Router();
 import * as middleware from '../utils/middleware';
 import * as dotenv from "dotenv";
@@ -12,7 +12,7 @@ router.route("/tags")
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get all the tags'
         // #swagger.security = [{"apiKeyAuth": []}]
-        // getAuthors(req, res);
+        getAllTags(req, res);
     })
 
 
@@ -23,7 +23,7 @@ router.route("/tags/:tagId")
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get a tag by id'
         // #swagger.security = [{"apiKeyAuth": []}]
-        // getAuthors(req, res);
+        getTagById(req, res);
     })
 
     .put(middleware.ensureLogin, (req: Request, res: Response) => {
@@ -38,13 +38,13 @@ router.route("/tags/:tagId")
       
       
       */
-        // getAuthors(req, res);
+        updateTagById(req, res);
     })
     .delete(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Delete a tag'
         // #swagger.security = [{"apiKeyAuth": []}]
-        // getAuthors(req, res);
+        deleteTagById(req, res);
     })
 
 

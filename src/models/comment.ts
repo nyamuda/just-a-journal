@@ -4,8 +4,8 @@ import { Schema, model } from "mongoose";
 
 let authorSchema = new Schema({
     name: { type: String },
-    email: { type: String, unique: true },
-    admin: { type: Boolean, default: false }
+    email: { type: String }
+
 })
 let postSchema = new Schema({
     title: String,

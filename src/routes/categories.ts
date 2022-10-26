@@ -1,5 +1,8 @@
 import express, { Request, Response } from "express";
-import { getAllCategories, getCategoryById, deleteCategoryById, updateCategoryById } from "../controllers/index";
+import {
+    getAllCategories, getCategoryById, addCategory,
+    deleteCategoryById, updateCategoryById
+} from "../controllers/index";
 let router = express.Router();
 import * as middleware from '../utils/middleware';
 
@@ -12,7 +15,24 @@ router.route("/categories")
     .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Get all the categories'
+        // #swagger.security = [{"apiKeyAuth": []}]
         getAllCategories(req, res);
+    })
+    .post(middleware.ensureAdmin, (req: Request, res: Response) => {
+        // #swagger.tags = ['Categories']
+        // #swagger.summary = 'Add a category'
+        // #swagger.security = [{"apiKeyAuth": []}]
+        // #swagger.description ='<p> Only admins have the authority to add a category.</p>'
+        /* 
+       #swagger.parameters['obj'] = {
+                     in: 'body',
+                     schema: { $ref: '#/definitions/addCategory' }
+             } 
+      
+      
+      */
+        addCategory(req, res);
+
     })
 
 

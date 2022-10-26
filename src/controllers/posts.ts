@@ -67,6 +67,7 @@ export let addPost = async (req: Request, res: Response) => {
         category: req.body.category,
         author
     }
+
     Post.create(postBody)
         .then(async (post) => {
             //add the post to the set of Author.posts
@@ -153,13 +154,20 @@ export let deletPostById = (req: Request, res: Response) => {
 export let getPostByTags = async (req: Request, res: Response) => {
 
     try {
-        //get the id of the user from the token provided
-        let author_id = getIdFromToken(req, res);
-        //get all the posts by the author
-        let author_posts = await Post.find({ author_id });
-
+        // //get the id of the user from the token provided
+        // let author_id = getIdFromToken(req, res);
+        //all the posts
+        let all_posts = await Post.find({});
         //get the provided tags
-        let tags_for_filter = req.body.tags;
+        let tags_string: any = req.query.tags!;
+
+
+        //if no tags were provided
+        if (!tags_string) {
+            return res.json(all_posts);
+        }
+        //convert into array
+        let tags_for_filter = tags_string.split(",");
 
         //the array will contain the ids of the matched posts
         let posts_ids: any = [];
@@ -167,7 +175,7 @@ export let getPostByTags = async (req: Request, res: Response) => {
         for (let i = 0; i < tags_for_filter.length; i++) {
 
             //filtering the posts and removing duplicates
-            let matched_posts = author_posts.filter(post => {
+            let matched_posts = all_posts.filter(post => {
                 if (!posts_ids.includes(post.id)) {
                     posts_ids.push(post._id);
                     return post.tags.includes(tags_for_filter[i]);

@@ -161,7 +161,12 @@
         "summary": "Get all the posts",
         "description": "<p>The GET request returns all the posts by various authors.</p>",
         "parameters": [],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -176,6 +181,94 @@
             "description": "<p>To access this route, you must provide the access token. The logged in author/user id will be added to the post if the POST request is successful.</p>   <h3>Fields</h3>\n   <ul>   <li><p><b>title</b> &#187; A string : Required. The title of the post.</p></li>   <li><p><b>content</b> &#187; A string : Required. The content of the post.</p></li>   <li><p><b>tags</b> &#187; An array/list : Optional. All the tags related to the blog post.</p></li>   <li><p><b>summary</b> &#187; A string : Optional. A brief summary of the post.</p></li>   <li>   <p><b>status</b> &#187; A string : Optional. The status of the blog post.The status can either be <i>published</i> or <i>draft</i>. The default status is <i>published</i>.</p>   </li>   <li>   <p><b>category</b> &#187; A string : Optional. The category in which the post belongs. The default is <i>miscellaneous</i>. To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>   </li>   </ul>",
             "schema": {
               "$ref": "#/definitions/addPost"
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/findByTags": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog posts by tags",
+        "description": "<p>Tags to filter by. List all the tags separated by a comma, e.g. \"medicine,economics,history\".</p>",
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Tag value that need to be considered for filter",
+            "required": true,
+            "default": "medicine",
+            "explode": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/findByStatus": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog posts by status",
+        "description": "<p>At the moment, there are only two available statuses: <i>draft</i> and <i>publish</i>.</p>",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status value that need to be considered for filter",
+            "required": true,
+            "default": "publish",
+            "explode": "true",
+            "enum": [
+              "publish",
+              "draft"
+            ],
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/findByCategory": {
+      "get": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Find blog posts by category",
+        "description": "<p>To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Category value that need to be considered for filter",
+            "required": true,
+            "default": "miscellaneous",
+            "explode": "true",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -247,76 +340,7 @@
           }
         ],
         "responses": {},
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/posts/findByTags": {
-      "get": {
-        "tags": [
-          "Posts"
-        ],
-        "summary": "Find blog posts by tags",
-        "description": "Tags to filter by",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/tags"
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/posts/findByStatus": {
-      "get": {
-        "tags": [
-          "Posts"
-        ],
-        "summary": "Find blog posts by status",
-        "description": "<p>At the moment, there are only two available statuses: <i>draft</i> and <i>publish</i>.</p>",
-        "parameters": [
-          {
-            "name": "status",
-            "type": "query",
-            "description": "Status value that need to be considered for filter",
-            "required": true,
-            "default": "publish",
-            "explode": "true",
-            "enum": [
-              "publish",
-              "draft"
-            ],
-            "in": "query"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/posts/findByCategory": {
-      "get": {
-        "tags": [
-          "Posts"
-        ],
-        "summary": "Find blog posts by category",
-        "description": "<p>To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>",
-        "parameters": [
-          {
-            "name": "category",
-            "type": "query",
-            "description": "Category value that need to be considered for filter",
-            "required": true,
-            "default": "miscellaneous",
-            "explode": "true",
-            "in": "query"
-          }
-        ],
-        "responses": {}
+        "security": []
       }
     },
     "/{postId}/comments": {
@@ -517,7 +541,34 @@
         "summary": "Get all the categories",
         "description": "",
         "parameters": [],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Add a category",
+        "description": "<p> Only admins have the authority to add a category.</p>",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/addCategory"
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/categories/{categoryId}": {
@@ -639,6 +690,28 @@
         "content": {
           "type": "string",
           "example": "The content of the post"
+        },
+        "tags": {
+          "type": "array",
+          "example": [
+            "science",
+            "medicine"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "summary": {
+          "type": "string",
+          "example": ""
+        },
+        "status": {
+          "type": "string",
+          "example": ""
+        },
+        "category": {
+          "type": "string",
+          "example": ""
         }
       },
       "required": [
@@ -747,17 +820,6 @@
         "email",
         "password"
       ]
-    },
-    "tags": {
-      "type": "array",
-      "example": [
-        "medicine",
-        "technology",
-        "economics"
-      ],
-      "items": {
-        "type": "string"
-      }
     }
   }
 }

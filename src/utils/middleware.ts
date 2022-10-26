@@ -108,7 +108,7 @@ export let ensureAuthorizedUpdateDeleteComment = async (req: Request, res: Respo
 
 
         //get the item you're trying to update
-        let comment: any = await Comment.findById(req.params.id);
+        let comment: any = await Comment.findById(req.params.commentId);
 
         if (!comment) {
             return res.status(404).json({ message: "The item you're trying to update/delete does not exist." })

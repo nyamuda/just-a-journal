@@ -1,4 +1,4 @@
-import { Author } from "../models/author";
+import { Author, Post } from "../models";
 import { Request, Response } from "express";
 import { validateUpdateAuthor } from "../utils/functions";
 
@@ -27,7 +27,7 @@ export let getAuthorById = async (req: Request, res: Response) => {
 }
 
 //update existing author
-export let updateAuthorById = (req: Request, res: Response) => {
+export let updateAuthorById = async (req: Request, res: Response) => {
     //validate the data
     let valid_details = validateUpdateAuthor(req.body);
 
@@ -42,6 +42,20 @@ export let updateAuthorById = (req: Request, res: Response) => {
         email: req.body.email,
         name: req.body.name
     }).then(val => {
+        // // update the author in Post.author
+        // let updatedModel = await Post.updateMany(
+        //     { 'author._id': req.params.authorId },
+        //     {
+        //         $set: {
+        //             'author.$.email': req.body.email,
+        //             'author.$.name': req.body.name
+        //         }
+        //     },
+        //     {
+        //         "multi": true
+        //     }
+
+        // )
         return res.json({ message: 'The update operation was successful.' })
     }).catch(err => {
         console.log(err);

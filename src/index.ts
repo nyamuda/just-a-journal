@@ -22,6 +22,9 @@ app.use(routes.loginRoutes);
 app.use(routes.registerRoutes);
 app.use(routes.swaggerRoutes);
 app.use(routes.postRoutes);
+app.use(routes.commentRoutes);
+app.use(routes.categoryRoutes);
+app.use(routes.tagRoutes);
 
 
 

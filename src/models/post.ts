@@ -7,8 +7,7 @@ import { IPost } from "../utils/functions"
 
 let authorSchema = new Schema({
     name: { type: String },
-    email: { type: String, unique: true },
-    admin: { type: Boolean, default: false }
+    email: { type: String }
 })
 
 let commentSchema = new Schema({
@@ -19,7 +18,6 @@ let STATUSES = ["publish", "draft"];
 //create a post schema
 let postSchema: Schema = new Schema<IPost>(
     {
-
         title: String,
         content: String,
         tags: [String],

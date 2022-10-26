@@ -27,7 +27,11 @@ const doc = {
         },
         addPost: {
             $title: "Title of the post",
-            $content: "The content of the post"
+            $content: "The content of the post",
+            tags: ["science", "medicine"],
+            summary: "",
+            status: "",
+            category: ""
         },
         updatePost: {
             title: "Title of the post",
@@ -54,9 +58,7 @@ const doc = {
         loginUser: {
             $email: "email@example.com",
             $password: "helloworld"
-        },
-        tags: ["medicine", "technology", "economics"],
-
+        }
     },
     securityDefinitions: {
         oAuthGithub: {

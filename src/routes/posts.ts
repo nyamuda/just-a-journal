@@ -13,8 +13,9 @@ dotenv.config();
 
 
 router.route("/posts")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.summary = 'Get all the posts'
 
         // #swagger.description ='<p>The GET request returns all the posts by various authors.</p>'
@@ -50,6 +51,88 @@ router.route("/posts")
         addPost(req, res)
     })
 
+router.route("/posts/findByTags")
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
+        // #swagger.tags = ['Posts']
+        // #swagger.summary = 'Find blog posts by tags'
+        // #swagger.security = [{"apiKeyAuth": []}]
+        // #swagger.description ='<p>Tags to filter by. List all the tags separated by a comma, e.g. "medicine,economics,history".</p>'
+
+        /* 
+        #swagger.parameters['tags'] = {
+                     name:'tags',
+                     in:'query',
+                     description: 'Tag value that need to be considered for filter',
+                     required:'true',
+                     default:'medicine',
+                     explode:'true',
+                     schema: {
+                           type:'string'
+                        }
+                    
+                    
+             } 
+
+        */
+
+        getPostByTags(req, res);
+    })
+router.route("/posts/findByStatus")
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
+        // #swagger.tags = ['Posts']
+        // #swagger.summary = 'Find blog posts by status'
+        // #swagger.security = [{"apiKeyAuth": []}]
+        // #swagger.description ='<p>At the moment, there are only two available statuses: <i>draft</i> and <i>publish</i>.</p>'
+
+        /* 
+        #swagger.parameters['status'] = {
+                     name:'status',
+                     in:'query',
+                     description: 'Status value that need to be considered for filter',
+                     required:'true',
+                     default:'publish',
+                     explode:'true',
+                     'enum':['publish','draft'],
+                     schema: {
+                           type:'string'
+                        }
+                     
+                    
+             } 
+
+        */
+
+        getPostByStatus(req, res)
+    })
+
+router.route("/posts/findByCategory")
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
+        // #swagger.tags = ['Posts']
+        // #swagger.summary = 'Find blog posts by category'
+        // #swagger.security = [{"apiKeyAuth": []}]
+        // #swagger.description ='<p>To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>'
+
+        /* 
+        #swagger.parameters['category'] = {
+                     name:'category',
+                     in:'query',
+                     description: 'Category value that need to be considered for filter',
+                     required:'true',
+                     default:'miscellaneous',
+                     explode:'true',
+                     schema: {
+                           type:'string'
+                        }
+                     
+                    
+             } 
+
+        */
+
+        getPostByCategory(req, res);
+    })
+
+
 
 router.route("/posts/:id")
     .get((req: Request, res: Response) => {
@@ -82,68 +165,6 @@ router.route("/posts/:id")
         deletPostById(req, res);
     })
 
-router.route("/posts/findByTags")
-    .get((req: Request, res: Response) => {
-        // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Find blog posts by tags'
-        // #swagger.description ='Tags to filter by'
-
-        /* 
-        #swagger.parameters['obj'] = {
-                     in: 'body',
-                     schema: { $ref: '#/definitions/tags' }
-             } 
-
-        */
-
-        getPostByTags(req, res);
-    })
-router.route("/posts/findByStatus")
-    .get((req: Request, res: Response) => {
-        // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Find blog posts by status'
-        // #swagger.description ='<p>At the moment, there are only two available statuses: <i>draft</i> and <i>publish</i>.</p>'
-
-        /* 
-        #swagger.parameters['status'] = {
-                     name:'status',
-                     type:'query',
-                     description: 'Status value that need to be considered for filter',
-                     required:'true',
-                     default:'publish',
-                     explode:'true',
-                     'enum':['publish','draft']
-                     
-                    
-             } 
-
-        */
-
-        getPostByStatus(req, res)
-    })
-
-router.route("/posts/findByCategory")
-    .get((req: Request, res: Response) => {
-        // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Find blog posts by category'
-        // #swagger.description ='<p>To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>'
-
-        /* 
-        #swagger.parameters['category'] = {
-                     name:'category',
-                     type:'query',
-                     description: 'Category value that need to be considered for filter',
-                     required:'true',
-                     default:'miscellaneous',
-                     explode:'true'
-                     
-                    
-             } 
-
-        */
-
-        getPostByCategory(req, res);
-    })
 
 
 
