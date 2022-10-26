@@ -83,3 +83,17 @@ export let updateCategoryById = async (req: Request, res: Response) => {
     }
 
 }
+
+
+//get all categories
+export let getAllCategories = async (req: Request, res: Response) => {
+
+    try {
+        let all_categories = await Category.find({});
+        return res.json(all_categories);
+    } catch (err) {
+        res.status(500).json({ message: 'Sorry, the operation failed.', error: err })
+    }
+
+}
+
