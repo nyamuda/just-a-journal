@@ -133,6 +133,7 @@ export let deletPostById = (req: Request, res: Response) => {
 
     Post.findByIdAndDelete(req.params.id)
         .then(async val => {
+            //remove the post from Author.posts
             let updatedModel = await Author.findOneAndUpdate({ _id: author_id },
                 {
                     $pull: {

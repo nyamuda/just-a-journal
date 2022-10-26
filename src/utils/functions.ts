@@ -14,7 +14,7 @@ export interface IPost {
     tags: Array<string>,
     summary: string,
     status: string,
-    comment_count: number,
+    comments: Array<object>,
     like_count: number,
     author: object,
     category: string
@@ -127,6 +127,43 @@ export let validatePost = (post: object): errorMessage => {
         message: "No errors"
     }
 
+
+}
+
+
+export let validateComment = (comment: object): errorMessage => {
+
+    let schema = Joi.object({
+
+        content: Joi.string().min(3).required(),
+    })
+
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    }
+
+}
+
+export let validateUpdateComment = (comment: object): errorMessage => {
+
+    let schema = Joi.object({
+
+        content: Joi.string().min(3)
+    })
+
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    }
 
 }
 

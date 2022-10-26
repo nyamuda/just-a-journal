@@ -1,11 +1,29 @@
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+
+
+
+let authorSchema = new Schema({
+    name: { type: String },
+    email: { type: String, unique: true },
+    admin: { type: Boolean, default: false }
+})
+let postSchema = new Schema({
+    title: String,
+    content: String,
+    tags: [String],
+    summary: String,
+    status: String,
+    comment_count: Number,
+    like_count: Number,
+    category: String
+})
 
 //create a comment schema
-let commentSchema = new mongoose.Schema(
+let commentSchema = new Schema(
     {
         content: { type: String },
-        post_id: { type: Number },
-        author_id: { type: Number },
+        post: postSchema,
+        author: authorSchema,
         like_count: { type: Number, default: 0 }
     },
     {
@@ -15,7 +33,7 @@ let commentSchema = new mongoose.Schema(
 
 //create a comment model
 
-let Comment = mongoose.model("Comment", commentSchema, "comments");
+let Comment = model("Comment", commentSchema, "comments");
 
 export { Comment }
 
