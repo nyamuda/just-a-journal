@@ -29,7 +29,7 @@ export let ensureRightUser = (req: Request, res: Response, next: NextFunction) =
 
 
         //if its the right user
-        if (token.author_id === req.params.id) {
+        if (token.author_id === req.params.authorId) {
             return next();
         }
 

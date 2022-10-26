@@ -17,7 +17,7 @@ export let getAuthors = async (req: Request, res: Response) => {
 //get author by id
 export let getAuthorById = async (req: Request, res: Response) => {
 
-    let author = await Author.findById(req.params.id)
+    let author = await Author.findById(req.params.authorId)
         .then(val => res.json(val))
         .catch(err => {
             res.status(500).json({ message: 'Sorry, the operation failed.', error: err })
@@ -38,7 +38,7 @@ export let updateAuthorById = (req: Request, res: Response) => {
 
     //if there are no valiation errors,
     //update the author
-    Author.findByIdAndUpdate(req.params.id, {
+    Author.findByIdAndUpdate(req.params.authorId, {
         email: req.body.email,
         name: req.body.name
     }).then(val => {
@@ -55,7 +55,7 @@ export let updateAuthorById = (req: Request, res: Response) => {
 //delete an author
 export let deletAuthorById = (req: Request, res: Response) => {
 
-    Author.findByIdAndDelete(req.params.id)
+    Author.findByIdAndDelete(req.params.authorId)
         .then(val => {
             return res.json({ message: 'The delete operation was successful. ' })
         })

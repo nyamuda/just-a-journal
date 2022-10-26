@@ -12,6 +12,7 @@ router.route("/:postId/comments")
     .post(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Comments']
         // #swagger.summary = 'Add a comment to a post'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p>To access this route, you must provide the access token.</p>'
         /* 
        #swagger.parameters['obj'] = {
@@ -28,6 +29,7 @@ router.route("/:postId/comments")
 router.route("/comments/:commentId")
     .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Comments']
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.summary = 'Get a comment by id'
 
         getCommentById(req, res);
@@ -35,6 +37,7 @@ router.route("/comments/:commentId")
     .put(middleware.ensureAuthorizedUpdateDeleteComment, (req: Request, res: Response) => {
         // #swagger.tags = ['Comments']
         // #swagger.summary = 'Update an existing comment'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p>You can only update comments you've written. So, only a user with valid access token can update their comments.</p>'
         /* 
        #swagger.parameters['obj'] = {
@@ -49,6 +52,7 @@ router.route("/comments/:commentId")
     .delete(middleware.ensureAuthorizedUpdateDeleteComment, (req: Request, res: Response) => {
         // #swagger.tags = ['Comments']
         // #swagger.summary = 'Delete a comment'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p>You can only delete comments you've written. So, only a user with valid access token can delete their comments.</p>'
         // getAuthors(req, res);
         deleteCommentById(req, res);

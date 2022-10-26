@@ -7,7 +7,7 @@ import { validateName, validateNameUpdate } from "../utils/functions";
 //find category by id
 export let getCategoryById = async (req: Request, res: Response) => {
     try {
-        let category = await Category.findById(req.params.id);
+        let category = await Category.findById(req.params.categoryId);
         return res.json(category);
     } catch (err) {
         res.status(500).json({ message: 'Sorry, the operation failed.', error: err })
@@ -45,7 +45,7 @@ export let addCategory = async (req: Request, res: Response) => {
 export let deleteCategoryById = (req: Request, res: Response) => {
 
 
-    Category.findByIdAndDelete(req.params.id)
+    Category.findByIdAndDelete(req.params.categoryId)
         .then(val => {
             return res.json({ message: 'The delete operation was successful. ' })
         })
@@ -71,7 +71,7 @@ export let updateCategoryById = async (req: Request, res: Response) => {
 
         //if there are no errors
         //update the category
-        Category.findByIdAndUpdate(req.params.id, { name })
+        Category.findByIdAndUpdate(req.params.categoryId, { name })
             .then(val => {
                 return res.json({ message: 'The update operation was successful.' })
 

@@ -11,6 +11,7 @@ router.route("/tags")
     .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get all the tags'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // getAuthors(req, res);
     })
 
@@ -21,12 +22,14 @@ router.route("/tags/:tagId")
     .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get a tag by id'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // getAuthors(req, res);
     })
 
     .put(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Update an existing tag'
+        // #swagger.security = [{"apiKeyAuth": []}]
         /* 
        #swagger.parameters['obj'] = {
                      in: 'body',
@@ -40,6 +43,7 @@ router.route("/tags/:tagId")
     .delete(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Delete a tag'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // getAuthors(req, res);
     })
 

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { getAuthors } from "../controllers/index";
+import { getAuthors, getAuthorById, updateAuthorById, deletAuthorById } from "../controllers/index";
 let router = express.Router();
 import * as middleware from '../utils/middleware';
 
@@ -13,9 +13,10 @@ router.route("/authors")
     .get(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Get a list of all the authors'
+        // #swagger.security = [{"apiKeyAuth": []}]
         //#swagger.description ='<p><span style="color:red;"><b>Note:</b></span> Only admins have the authority to do this.</p>'
+        getAuthors(req, res);
 
-        // getAuthors(req, res);
     })
 
 
@@ -23,12 +24,14 @@ router.route("/authors/:authorId")
     .get(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Get an author by id'
+        // #swagger.security = [{"apiKeyAuth": []}]
         //#swagger.description='<p>Only admins or the correct user/author have the authority to do this.</p>'
-        // getAuthors(req, res);
+        getAuthorById(req, res);
     })
     .put(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Update an existing author'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
         /* 
        #swagger.parameters['obj'] = {
@@ -38,14 +41,15 @@ router.route("/authors/:authorId")
       
       
       */
-        // getAuthors(req, res);
+        updateAuthorById(req, res);
     })
     .delete(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Delete an existing author'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
 
-        // getAuthors(req, res);
+        deletAuthorById(req, res);
     })
 
 

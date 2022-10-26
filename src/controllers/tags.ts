@@ -7,7 +7,7 @@ import { validateName, validateNameUpdate } from "../utils/functions";
 //find tag by id
 export let getTagById = async (req: Request, res: Response) => {
     try {
-        let tag = await Tag.findById(req.params.id);
+        let tag = await Tag.findById(req.params.tagId);
         return res.json(tag);
     } catch (err) {
         res.status(500).json({ message: 'Sorry, the operation failed.', error: err })
@@ -45,7 +45,7 @@ export let addTag = async (req: Request, res: Response) => {
 export let deleteTagById = (req: Request, res: Response) => {
 
 
-    Tag.findByIdAndDelete(req.params.id)
+    Tag.findByIdAndDelete(req.params.tagId)
         .then(val => {
             return res.json({ message: 'The delete operation was successful. ' })
         })
@@ -71,7 +71,7 @@ export let updateTagById = async (req: Request, res: Response) => {
 
         //if there are no errors
         //update the tag
-        Tag.findByIdAndUpdate(req.params.id, { name })
+        Tag.findByIdAndUpdate(req.params.tagId, { name })
             .then(val => {
                 return res.json({ message: 'The update operation was successful.' })
 

@@ -21,7 +21,7 @@ export let addComment = async (req: Request, res: Response) => {
     let author = await Author.findById(author_id);
 
     //get the post the comment is for
-    let post = await Post.findById(req.params.id);
+    let post = await Post.findById(req.params.postId);
     //add the post to the database
     let commentBody = {
 
@@ -32,7 +32,7 @@ export let addComment = async (req: Request, res: Response) => {
     Comment.create(commentBody)
         .then(async (comment) => {
             //add the comment to the set of Post.comments
-            let updatedPost = await Post.findOneAndUpdate({ _id: req.params.id }, { $addToSet: { comments: comment } });
+            let updatedPost = await Post.findOneAndUpdate({ _id: req.params.postId }, { $addToSet: { comments: comment } });
             return res.status(201).json({ message: 'The comment was successfully created.', _id: comment._id })
         })
         .catch(err => {
@@ -57,15 +57,15 @@ export let updateCommentById = async (req: Request, res: Response) => {
 
 
         //get the comment
-        let old_comment: any = await Comment.findById(req.params.id);
+        let old_comment: any = await Comment.findById(req.params.commentId);
         //get the id of the post the comment is for
         let post_id = old_comment.post._id;
 
         //if there are no errors
         //update the post
-        Comment.findByIdAndUpdate(req.params.id, { content }).then(async comment => {
+        Comment.findByIdAndUpdate(req.params.commentId, { content }).then(async comment => {
             // update the comment in Post.comments
-            let updatedModel = await Post.findOneAndUpdate({ _id: post_id, ' comments._id': req.params.id },
+            let updatedModel = await Post.findOneAndUpdate({ _id: post_id, ' comments._id': req.params.commentId },
                 {
                     $set: {
                         'posts.$.content': content
@@ -90,18 +90,18 @@ export let deleteCommentById = async (req: Request, res: Response) => {
 
 
     //get the comment
-    let old_comment: any = await Comment.findById(req.params.id);
+    let old_comment: any = await Comment.findById(req.params.commentId);
     //get the id of the post the comment is for
     let post_id = old_comment.post._id;
 
-    Comment.findByIdAndDelete(req.params.id)
+    Comment.findByIdAndDelete(req.params.commentId)
         .then(async val => {
             //remove the comment from Post.comments
             let updatedModel = await Post.findOneAndUpdate({ _id: post_id },
                 {
                     $pull: {
                         comments: {
-                            _id: req.params.id
+                            _id: req.params.commentId
                         }
                     }
                 })
@@ -117,7 +117,7 @@ export let deleteCommentById = async (req: Request, res: Response) => {
 //find comment by id
 export let getCommentById = async (req: Request, res: Response) => {
     try {
-        let comment = await Comment.findById(req.params.id);
+        let comment = await Comment.findById(req.params.commentId);
         return res.json(comment);
     } catch (err) {
         res.status(500).json({ message: 'Sorry, the operation failed.', error: err })

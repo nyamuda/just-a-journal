@@ -21,6 +21,7 @@ router.route("/categories")
 router.route("/categories/:categoryId")
     .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.summary = 'Get a category by id'
         getCategoryById(req, res);
     })
@@ -28,6 +29,7 @@ router.route("/categories/:categoryId")
     .put(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Update an existing category'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to update existing categories.</p>'
         /* 
        #swagger.parameters['obj'] = {
@@ -42,6 +44,7 @@ router.route("/categories/:categoryId")
     .delete(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Delete a category'
+        // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete a category.</p>'
         deleteCategoryById(req, res);
     })
