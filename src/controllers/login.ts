@@ -37,7 +37,8 @@ export let loginAuthor = async (req: Request, res: Response) => {
 
     //if there are no errors
     //create and access token
-    let token = createJWT({ email: email, admin: false });
+    let author_id = old_author.toObject()._id.toString();
+    let token = createJWT({ email: email, admin: false, author_id });
 
     return res.json({ token });
 

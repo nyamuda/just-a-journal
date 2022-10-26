@@ -2,6 +2,11 @@ import express, { Request, Response } from "express";
 import { getAuthors } from "../controllers/index";
 let router = express.Router();
 import * as dotenv from "dotenv";
+import * as middleware from '../utils/middleware';
+import {
+    addPost, getAllPosts, updatePostById, deletPostById, getPostById,
+    getPostByTags, getPostByCategory, getPostByStatus
+} from "../controllers"
 dotenv.config();
 
 
@@ -10,17 +15,20 @@ dotenv.config();
 router.route("/posts")
     .get((req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Get all the blog posts'
-        // #swagger.description ='<p>The GET request only returns all the blogs written by the author or user.</p>'
-        // getAuthors(req, res);
+        // #swagger.summary = 'Get all the posts'
+
+        // #swagger.description ='<p>The GET request only returns all the posts in the database.</p>'
+        getAllPosts(req, res);
     })
-    .post((req: Request, res: Response) => {
+router.route("/posts")
+    .post(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Add a blog post'
+        // #swagger.summary = 'Add a post'
+        // #swagger.security = [{"apiKeyAuth": []}]
         /* 
          #swagger.parameters['obj'] = {
                        in: 'body',
-                       description: 'The logged in author/user id will be added to the post if the POST request is successful.\n
+                       description: '<p>To access this route, you must provide the access token. The logged in author/user id will be added to the post if the POST request is successful.</p>
                        <h3>Fields</h3>\n
                        <ul>
                         <li><p><b>title</b> &#187; A string : Required. The title of the post.</p></li>
@@ -39,7 +47,7 @@ router.route("/posts")
         
         
         */
-        // getAuthors(req, res);
+        addPost(req, res)
     })
 
 
@@ -48,13 +56,15 @@ router.route("/posts/:id")
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Find blog post by id'
 
-        // getAuthors(req, res);
+        getPostById(req, res);
     })
-    .put((req: Request, res: Response) => {
+    .put(middleware.ensureAuthorizedUpdateDeletePost, (req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
-        // #swagger.summary = 'Update an existing blog post'
-        // #swagger.description ='<p>You can only update blogs you've written. So, only a user with valid access token can update their posts.</p>'
+        // #swagger.summary = 'Update an existing post'
+        // #swagger.security = [{"apiKeyAuth": []}]
+
         /* 
+       #swagger.description ='<p>You can only update posts you've written (unless you're the admin). To access this route, you must provide the access token.</p>'
        #swagger.parameters['obj'] = {
                      in: 'body',
                      schema: { $ref: '#/definitions/updatePost' }
@@ -62,13 +72,14 @@ router.route("/posts/:id")
       
       
       */
-        // getAuthors(req, res);
+        updatePostById(req, res);
     })
-    .delete((req: Request, res: Response) => {
+    .delete(middleware.ensureAuthorizedUpdateDeletePost, (req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Delete a blog post'
-        // #swagger.description ='<p>You can only delete blogs you've written. So, only a user with valid access token can delete their posts.</p>'
-        // getAuthors(req, res);
+        // #swagger.security = [{"apiKeyAuth": []}]
+        // #swagger.description ='<p>You can only delete posts you've written (unless you're the admin). To access this route, you must provide the access token.</p>'
+        deletPostById(req, res);
     })
 
 router.route("/posts/findByTags")
@@ -85,7 +96,7 @@ router.route("/posts/findByTags")
 
         */
 
-        // getAuthors(req, res);
+        getPostByTags(req, res);
     })
 router.route("/posts/findByStatus")
     .get((req: Request, res: Response) => {
@@ -108,7 +119,7 @@ router.route("/posts/findByStatus")
 
         */
 
-        // getAuthors(req, res);
+        getPostByStatus(req, res)
     })
 
 router.route("/posts/findByCategory")
@@ -131,7 +142,7 @@ router.route("/posts/findByCategory")
 
         */
 
-        // getAuthors(req, res);
+        getPostByCategory(req, res);
     })
 
 

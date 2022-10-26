@@ -73,6 +73,12 @@ const doc = {
             authorizationUrl: 'just-a-journal.onrender.com/oauth/github',
             flow: 'implicit',
 
+        },
+        apiKeyAuth: {
+            type: "apiKey",
+            name: "authorization",
+            in: "header",
+            description: "The token for authentication"
         }
     }
 };

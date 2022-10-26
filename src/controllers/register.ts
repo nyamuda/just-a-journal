@@ -32,8 +32,9 @@ export let registerAuthor = async (req: Request, res: Response) => {
     //add the  user to the database
     Author.create({ name, email, password: hashed_password })
         .then(val => {
+            let id = val.toObject()._id.toString();
             //create an access token
-            let token = createJWT({ email, admin: false });
+            let token = createJWT({ email, admin: false, author_id: id });
 
             return res.status(201).json({ token });
         })

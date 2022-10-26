@@ -1,21 +1,30 @@
-import { number } from "joi";
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+import { IPost } from "../utils/functions"
 
 
 
-let STATUSES=["publish","draft"];
+
+
+let authorSchema = new Schema({
+    name: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
+    admin: { type: Boolean, default: false }
+})
+
+let STATUSES = ["publish", "draft"];
 //create a post schema
-let postSchema = new mongoose.Schema(
+let postSchema: Schema = new Schema<IPost>(
     {
-        title: { type: String },
-        content: { type: String },
-        tags: { type: Array },
-        summary: { type: String },
-        status: { type: String, default: "publish",enum:STATUSES },
+        title: String,
+        content: String,
+        tags: [String],
+        summary: String,
+        status: { type: String, default: "publish", enum: STATUSES },
         comment_count: { type: Number, default: 0 },
         like_count: { type: Number, default: 0 },
-        author_id: { type: Number },
-        category: { type: String, default: "miscellaneous" },
+        author: authorSchema,
+        category: { type: String, default: "miscellaneous" }
 
     },
     {
@@ -24,6 +33,6 @@ let postSchema = new mongoose.Schema(
 )
 
 //create post model
-let Post = mongoose.model("Post", postSchema, "posts");
+let Post = model<IPost>("Post", postSchema, "posts");
 
-export { Post }
+export { Post, postSchema }

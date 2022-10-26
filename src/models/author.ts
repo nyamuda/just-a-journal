@@ -1,13 +1,35 @@
-import { bool } from "joi";
-import mongoose from "mongoose";
+import { Schema, model } from "mongoose";
+
+
+
+interface IAuthor {
+    name: string,
+    email: string,
+    password: string,
+    admin: boolean,
+    posts: Array<object>
+}
+
+
+let postSchema = new Schema({
+    title: String,
+    content: String,
+    tags: [String],
+    summary: String,
+    status: String,
+    comment_count: Number,
+    like_count: Number,
+    category: String
+})
 
 //create a user schema
-let authorSchema = new mongoose.Schema(
+let authorSchema: Schema = new Schema<IAuthor>(
     {
         name: { type: String },
         email: { type: String, unique: true },
         password: { type: String },
-        admin: { type: Boolean, default: false }
+        admin: { type: Boolean, default: false },
+        posts: [postSchema]
     },
     {
         timestamps: true
@@ -16,8 +38,8 @@ let authorSchema = new mongoose.Schema(
 
 //create a user model
 
-let Author = mongoose.model("Author", authorSchema, "authors");
+let Author = model<IAuthor>("Author", authorSchema, "authors");
 
-export { Author }
+export { Author, authorSchema }
 
 

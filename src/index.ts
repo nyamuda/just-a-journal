@@ -21,6 +21,7 @@ app.use(routes.oauthRoutes);
 app.use(routes.loginRoutes);
 app.use(routes.registerRoutes);
 app.use(routes.swaggerRoutes);
+app.use(routes.postRoutes);
 
 
 

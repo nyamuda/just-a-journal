@@ -16,6 +16,12 @@
       "type": "oauth2",
       "authorizationUrl": "just-a-journal.onrender.com/oauth/github",
       "flow": "implicit"
+    },
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header",
+      "description": "The token for authentication"
     }
   },
   "paths": {
@@ -132,8 +138,8 @@
         "tags": [
           "Posts"
         ],
-        "summary": "Get all the blog posts",
-        "description": "<p>The GET request only returns all the blogs written by the author or user.</p>",
+        "summary": "Get all the posts",
+        "description": "<p>The GET request only returns all the posts in the database.</p>",
         "parameters": [],
         "responses": {}
       },
@@ -141,19 +147,24 @@
         "tags": [
           "Posts"
         ],
-        "summary": "Add a blog post",
+        "summary": "Add a post",
         "description": "",
         "parameters": [
           {
             "name": "obj",
             "in": "body",
-            "description": "The logged in author/user id will be added to the post if the POST request is successful.\n   <h3>Fields</h3>\n   <ul>   <li><p><b>title</b> &#187; A string : Required. The title of the post.</p></li>   <li><p><b>content</b> &#187; A string : Required. The content of the post.</p></li>   <li><p><b>tags</b> &#187; An array/list : Optional. All the tags related to the blog post.</p></li>   <li><p><b>summary</b> &#187; A string : Optional. A brief summary of the post.</p></li>   <li>   <p><b>status</b> &#187; A string : Optional. The status of the blog post.The status can either be <i>published</i> or <i>draft</i>. The default status is <i>published</i>.</p>   </li>   <li>   <p><b>category</b> &#187; A string : Optional. The category in which the post belongs. The default is <i>miscellaneous</i>. To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>   </li>   </ul>",
+            "description": "<p>To access this route, you must provide the access token. The logged in author/user id will be added to the post if the POST request is successful.</p>   <h3>Fields</h3>\n   <ul>   <li><p><b>title</b> &#187; A string : Required. The title of the post.</p></li>   <li><p><b>content</b> &#187; A string : Required. The content of the post.</p></li>   <li><p><b>tags</b> &#187; An array/list : Optional. All the tags related to the blog post.</p></li>   <li><p><b>summary</b> &#187; A string : Optional. A brief summary of the post.</p></li>   <li>   <p><b>status</b> &#187; A string : Optional. The status of the blog post.The status can either be <i>published</i> or <i>draft</i>. The default status is <i>published</i>.</p>   </li>   <li>   <p><b>category</b> &#187; A string : Optional. The category in which the post belongs. The default is <i>miscellaneous</i>. To see a list of all the available categories, make a GET request to <i>/categories</i>.</p>   </li>   </ul>",
             "schema": {
               "$ref": "#/definitions/addPost"
             }
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -177,8 +188,8 @@
         "tags": [
           "Posts"
         ],
-        "summary": "Update an existing blog post",
-        "description": "<p>You can only update blogs you",
+        "summary": "Update an existing post",
+        "description": "<p>You can only update posts you",
         "parameters": [
           {
             "name": "id",
@@ -194,14 +205,19 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
           "Posts"
         ],
         "summary": "Delete a blog post",
-        "description": "<p>You can only delete blogs you",
+        "description": "<p>You can only delete posts you",
         "parameters": [
           {
             "name": "id",
@@ -210,7 +226,12 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/posts/findByTags": {
@@ -279,6 +300,22 @@
       }
     },
     "/comments/{commentId}": {
+      "get": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Get a comment by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
       "put": {
         "tags": [
           "Comments"

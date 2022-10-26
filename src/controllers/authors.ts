@@ -27,7 +27,7 @@ export let getAuthorById = async (req: Request, res: Response) => {
 }
 
 //update existing author
-export let updateAuthorById = async (req: Request, res: Response) => {
+export let updateAuthorById = (req: Request, res: Response) => {
     //validate the data
     let valid_details = validateUpdateAuthor(req.body);
 
@@ -53,7 +53,7 @@ export let updateAuthorById = async (req: Request, res: Response) => {
 }
 
 //delete an author
-export let deletAuthorById = async (req: Request, res: Response) => {
+export let deletAuthorById = (req: Request, res: Response) => {
 
     Author.findByIdAndDelete(req.params.id)
         .then(val => {

@@ -22,10 +22,12 @@ export let loginGithub = async (req: any, res: any) => {
         if (!old_author) {
             Author.create({ name: name, email: email })
                 .then(val => {
+                    let id = val.toObject()._id.toString();
                     //create a token
                     let token = createJWT({
                         email: email,
-                        admin: false
+                        admin: false,
+                        author_id: id
                     });
                     return res.json({ token });
                 })
@@ -35,9 +37,11 @@ export let loginGithub = async (req: any, res: any) => {
         }
 
         //if the author is already in the database
+        let author_id = old_author!.toObject()._id.toString();
         let token = createJWT({
             email: email,
-            admin: false
+            admin: false,
+            author_id
         });
 
         return res.json({ token });
