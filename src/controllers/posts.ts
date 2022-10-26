@@ -7,7 +7,7 @@ import { Tag } from "../models";
 import { addNewTags } from "../utils/functions";
 
 
-//get all posts
+//get all posts written by the author
 export let getAllPosts = async (req: Request, res: Response) => {
 
     try {

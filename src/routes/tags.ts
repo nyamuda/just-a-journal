@@ -1,13 +1,14 @@
 import express, { Request, Response } from "express";
 import { getAuthors } from "../controllers/index";
 let router = express.Router();
+import * as middleware from '../utils/middleware';
 import * as dotenv from "dotenv";
 dotenv.config();
 
 
 
 router.route("/tags")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get all the tags'
         // getAuthors(req, res);
@@ -17,13 +18,13 @@ router.route("/tags")
 
 
 router.route("/tags/:tagId")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Get a tag by id'
         // getAuthors(req, res);
     })
 
-    .put((req: Request, res: Response) => {
+    .put(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Update an existing tag'
         /* 
@@ -36,7 +37,7 @@ router.route("/tags/:tagId")
       */
         // getAuthors(req, res);
     })
-    .delete((req: Request, res: Response) => {
+    .delete(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Tags']
         // #swagger.summary = 'Delete a tag'
         // getAuthors(req, res);

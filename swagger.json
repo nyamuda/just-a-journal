@@ -299,6 +299,31 @@
         "responses": {}
       }
     },
+    "/{postId}/comments": {
+      "post": {
+        "tags": [
+          "Comments"
+        ],
+        "summary": "Add a comment to a post",
+        "description": "<p>To access this route, you must provide the access token.</p>",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/addComment"
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/comments/{commentId}": {
       "get": {
         "tags": [
@@ -348,24 +373,6 @@
         "parameters": [
           {
             "name": "commentId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/comments/{postId}": {
-      "get": {
-        "tags": [
-          "Comments"
-        ],
-        "summary": "Get all the comments for a particular post",
-        "description": "<p>Get all the comments for a post by passing in the id of the post.</p>",
-        "parameters": [
-          {
-            "name": "postId",
             "in": "path",
             "required": true,
             "type": "string"
@@ -557,29 +564,6 @@
         "content": {
           "type": "string",
           "example": "The content of the post"
-        },
-        "tags": {
-          "type": "array",
-          "example": [
-            "medicine",
-            "technology",
-            "economics"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "summary": {
-          "type": "string",
-          "example": "A brief summary of the post"
-        },
-        "status": {
-          "type": "string",
-          "example": "publish or draft. The default is 'publish'"
-        },
-        "category": {
-          "type": "string",
-          "example": "The category in which the post belongs. The default is 'miscellaneous'"
         }
       },
       "required": [
@@ -597,29 +581,6 @@
         "content": {
           "type": "string",
           "example": "The content of the post"
-        },
-        "tags": {
-          "type": "array",
-          "example": [
-            "medicine",
-            "technology",
-            "economics"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "summary": {
-          "type": "string",
-          "example": "A brief summary of the post"
-        },
-        "status": {
-          "type": "string",
-          "example": "publish or draft"
-        },
-        "category": {
-          "type": "string",
-          "example": "The category in which the post belongs."
         }
       }
     },
@@ -629,15 +590,10 @@
         "content": {
           "type": "string",
           "example": "The comment"
-        },
-        "post_id": {
-          "type": "number",
-          "example": 12345
         }
       },
       "required": [
-        "content",
-        "post_id"
+        "content"
       ]
     },
     "updateComment": {

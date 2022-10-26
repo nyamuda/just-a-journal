@@ -1,29 +1,31 @@
 import express, { Request, Response } from "express";
-import { getAuthors } from "../controllers/index";
+import { getAllCategories, getCategoryById, deleteCategoryById, updateCategoryById } from "../controllers/index";
 let router = express.Router();
+import * as middleware from '../utils/middleware';
+
 import * as dotenv from "dotenv";
 dotenv.config();
 
 
 
 router.route("/categories")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Get all the categories'
-        // getAuthors(req, res);
+        getAllCategories(req, res);
     })
 
 
 
 
 router.route("/categories/:categoryId")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureLogin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Get a category by id'
-        // getAuthors(req, res);
+        getCategoryById(req, res);
     })
 
-    .put((req: Request, res: Response) => {
+    .put(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Update an existing category'
         // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to update existing categories.</p>'
@@ -35,13 +37,13 @@ router.route("/categories/:categoryId")
       
       
       */
-        // getAuthors(req, res);
+        updateCategoryById(req, res);
     })
-    .delete((req: Request, res: Response) => {
+    .delete(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Categories']
         // #swagger.summary = 'Delete a category'
         // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete a category.</p>'
-        // getAuthors(req, res);
+        deleteCategoryById(req, res);
     })
 
 

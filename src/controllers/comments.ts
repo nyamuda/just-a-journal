@@ -85,7 +85,7 @@ export let updateCommentById = async (req: Request, res: Response) => {
 
 
 //delete an comment
-export let deletCommentById = async (req: Request, res: Response) => {
+export let deleteCommentById = async (req: Request, res: Response) => {
 
 
 

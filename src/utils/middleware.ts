@@ -20,6 +20,30 @@ export let ensureLogin = (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+//ensure you're the right user --- middleware
+export let ensureRightUser = (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let header_value = req.body.token || req.headers.authorization;
+        let SECRET: Secret = process.env.SECRET!;
+        let token: any = jwt.verify(header_value, SECRET);
+
+
+        //if its the right user
+        if (token.author_id === req.params.id) {
+            return next();
+        }
+
+        //check if you're the admin
+        if (token.admin) {
+            return next();
+        }
+        return res.status(403).json({ message: "You do not have the authority to carry out this action." });
+
+    } catch (error) {
+        return res.status(401).json({ message: "Unauthorized", error });
+    }
+}
+
 //ensure you're an admin --- middleware
 export let ensureAdmin = (req: Request, res: Response, next: NextFunction) => {
     try {

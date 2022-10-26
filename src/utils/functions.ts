@@ -130,12 +130,48 @@ export let validatePost = (post: object): errorMessage => {
 
 }
 
+export let validateName = (comment: object): errorMessage => {
+
+    let schema = Joi.object({
+
+        name: Joi.string().min(3).required()
+    })
+
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    }
+
+}
+
+export let validateNameUpdate = (comment: object): errorMessage => {
+
+    let schema = Joi.object({
+
+        content: Joi.string().min(3)
+    })
+
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    }
+
+}
+
 
 export let validateContent = (comment: object): errorMessage => {
 
     let schema = Joi.object({
 
-        content: Joi.string().min(3).required(),
+        content: Joi.string().min(3).required()
     })
 
     let { value, error } = schema.validate(comment);

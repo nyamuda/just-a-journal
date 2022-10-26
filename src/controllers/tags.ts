@@ -1,6 +1,6 @@
 import { Tag } from "../models";
 import { Request, Response } from "express";
-import { validateContent, validateUpdateContent } from "../utils/functions";
+import { validateName, validateNameUpdate } from "../utils/functions";
 
 
 
@@ -17,18 +17,18 @@ export let getTagById = async (req: Request, res: Response) => {
 //add a tag
 export let addTag = async (req: Request, res: Response) => {
     //validate post data first
-    let valid_details = validateContent(req.body);
+    let valid_details = validateName(req.body);
 
     //if there is an error
     if (valid_details.error) {
         return res.status(400).json({ message: valid_details.message });
     }
 
-    let { content } = req.body;
+    let { name } = req.body;
 
     //mo errors
     //add the tag
-    Tag.create({ content })
+    Tag.create({ name })
         .then(tag => {
 
             return res.status(201).json({ message: 'The tag was successfully created.', _id: tag._id })
@@ -60,18 +60,18 @@ export let deleteTagById = (req: Request, res: Response) => {
 export let updateTagById = async (req: Request, res: Response) => {
     try {
         //validate the post data
-        let valid_details = validateUpdateContent(req.body);
+        let valid_details = validateNameUpdate(req.body);
 
         //if there is an error
         if (valid_details.error) {
             return res.status(400).json({ message: valid_details.message });
         }
-        let { content } = req.body;
+        let { name } = req.body;
 
 
         //if there are no errors
         //update the tag
-        Tag.findByIdAndUpdate(req.params.id, { content })
+        Tag.findByIdAndUpdate(req.params.id, { name })
             .then(val => {
                 return res.json({ message: 'The update operation was successful.' })
 

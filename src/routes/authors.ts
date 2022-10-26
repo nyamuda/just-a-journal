@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import { getAuthors } from "../controllers/index";
 let router = express.Router();
+import * as middleware from '../utils/middleware';
+
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -8,7 +10,7 @@ dotenv.config();
 
 
 router.route("/authors")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureAdmin, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Get a list of all the authors'
         //#swagger.description ='<p><span style="color:red;"><b>Note:</b></span> Only admins have the authority to do this.</p>'
@@ -18,15 +20,16 @@ router.route("/authors")
 
 
 router.route("/authors/:authorId")
-    .get((req: Request, res: Response) => {
+    .get(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Get an author by id'
+        //#swagger.description='<p>Only admins or the correct user/author have the authority to do this.</p>'
         // getAuthors(req, res);
     })
-    .put((req: Request, res: Response) => {
+    .put(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Update an existing author'
-        // #swagger.description ='<p>Only an author with valid access token can update their details.</p>'
+        // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
         /* 
        #swagger.parameters['obj'] = {
                      in: 'body',
@@ -37,10 +40,10 @@ router.route("/authors/:authorId")
       */
         // getAuthors(req, res);
     })
-    .delete((req: Request, res: Response) => {
+    .delete(middleware.ensureRightUser, (req: Request, res: Response) => {
         // #swagger.tags = ['Authors']
         // #swagger.summary = 'Delete an existing author'
-        // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete an author.</p>'
+        // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
 
         // getAuthors(req, res);
     })

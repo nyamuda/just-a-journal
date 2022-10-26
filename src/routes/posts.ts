@@ -17,7 +17,7 @@ router.route("/posts")
         // #swagger.tags = ['Posts']
         // #swagger.summary = 'Get all the posts'
 
-        // #swagger.description ='<p>The GET request only returns all the posts in the database.</p>'
+        // #swagger.description ='<p>The GET request returns all the posts by various authors.</p>'
         getAllPosts(req, res);
     })
 router.route("/posts")
