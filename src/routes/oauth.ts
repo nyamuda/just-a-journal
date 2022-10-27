@@ -1,16 +1,17 @@
-import express from "express";
+import express, { Request, Response } from "express";
 let router = express.Router();
 import * as dotenv from "dotenv";
 import { loginGithub } from "../controllers/index"
+
 dotenv.config();
 
 
 
 
 router.route("/oauth/github")
-    .get((req, res): void => {
+    .get((req: Request, res: Response): void => {
         let url: string = `https://github.com/login/oauth/authorize?client_id=${process.env.ClientID}`;
-        res.redirect(url);
+        return res.redirect(url);
     })
 
 router.route("/oauth/github-callback")

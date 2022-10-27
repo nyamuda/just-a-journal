@@ -36,7 +36,7 @@ dotenv.config();
 router.route("/oauth/github")
     .get((req, res) => {
     let url = `https://github.com/login/oauth/authorize?client_id=${process.env.ClientID}`;
-    res.redirect(url);
+    return res.redirect(url);
 });
 router.route("/oauth/github-callback")
     .get(index_1.loginGithub);
