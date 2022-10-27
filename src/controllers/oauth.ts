@@ -12,7 +12,6 @@ export let loginGithub = async (req: any, res: any) => {
         let { name, email } = await getGithubUser(github_token);
 
 
-
         //check if author already exists in the database
         let old_author = await Author.findOne({ email: email });
 

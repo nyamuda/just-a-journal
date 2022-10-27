@@ -65,7 +65,7 @@ const doc = {
     securityDefinitions: {
         oAuthGithub: {
             type: 'oauth2',
-            authorizationUrl: 'just-a-journal.onrender.com/oauth/github',
+            authorizationUrl: 'https://just-a-journal.onrender.com/oauth/github',
             flow: 'implicit',
         },
         apiKeyAuth: {

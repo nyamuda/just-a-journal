@@ -33,5 +33,5 @@ dotenv.config();
 const PORT = process.env.PORT || 8000;
 app_1.default.listen(PORT, () => {
     (0, index_1.connect_database)();
-    console.log(`App listening to port ${PORT}`);
+    console.log(`Server listening to port ${PORT}`);
 });
