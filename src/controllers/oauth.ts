@@ -1,12 +1,14 @@
 import { Author } from "../models/author";
 import { getGitHubToken, getGithubUser, createJWT } from "../utils/functions";
+import { Request, Response } from "express";
 
 
 
-export let loginGithub = async (req: any, res: any) => {
+export let loginGithub = async (req: Request, res: Response) => {
     try {
+        let code: any = req.query.code;
         //get git access token
-        let github_token = await getGitHubToken(req.query.code);
+        let github_token = await getGitHubToken(code);
 
         //github user details
         let { name, email } = await getGithubUser(github_token);
@@ -34,16 +36,19 @@ export let loginGithub = async (req: any, res: any) => {
                     return res.json({ "message": err });
                 })
         }
+        else {
+            //if the author is already in the database
+            let author_id = old_author!.toObject()._id.toString();
+            let token = createJWT({
+                email: email,
+                admin: false,
+                author_id
+            });
 
-        //if the author is already in the database
-        let author_id = old_author!.toObject()._id.toString();
-        let token = createJWT({
-            email: email,
-            admin: false,
-            author_id
-        });
+            return res.json({ token });
+        }
 
-        return res.json({ token });
+
 
     } catch (error) {
         return res.json(error);

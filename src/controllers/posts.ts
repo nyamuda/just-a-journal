@@ -204,7 +204,7 @@ export let getPostByStatus = async (req: Request, res: Response) => {
 //get posts by category
 export let getPostByCategory = async (req: Request, res: Response) => {
     try {
-        let matchedPosts = await Post.find({ category: req.query.categoru });
+        let matchedPosts = await Post.find({ category: req.query.category });
         return res.json(matchedPosts);
 
     } catch (error) {

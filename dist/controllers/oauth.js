@@ -14,8 +14,9 @@ const author_1 = require("../models/author");
 const functions_1 = require("../utils/functions");
 let loginGithub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        let code = req.query.code;
         //get git access token
-        let github_token = yield (0, functions_1.getGitHubToken)(req.query.code);
+        let github_token = yield (0, functions_1.getGitHubToken)(code);
         //github user details
         let { name, email } = yield (0, functions_1.getGithubUser)(github_token);
         //check if author already exists in the database
@@ -38,14 +39,16 @@ let loginGithub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 return res.json({ "message": err });
             });
         }
-        //if the author is already in the database
-        let author_id = old_author.toObject()._id.toString();
-        let token = (0, functions_1.createJWT)({
-            email: email,
-            admin: false,
-            author_id
-        });
-        return res.json({ token });
+        else {
+            //if the author is already in the database
+            let author_id = old_author.toObject()._id.toString();
+            let token = (0, functions_1.createJWT)({
+                email: email,
+                admin: false,
+                author_id
+            });
+            return res.json({ token });
+        }
     }
     catch (error) {
         return res.json(error);

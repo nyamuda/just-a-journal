@@ -183,7 +183,7 @@ exports.getPostByStatus = getPostByStatus;
 //get posts by category
 let getPostByCategory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        let matchedPosts = yield models_1.Post.find({ category: req.query.categoru });
+        let matchedPosts = yield models_1.Post.find({ category: req.query.category });
         return res.json(matchedPosts);
     }
     catch (error) {
