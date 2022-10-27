@@ -26,12 +26,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const app_1 = __importDefault(require("./app"));
-const index_1 = require("./models/index");
-const dotenv = __importStar(require("dotenv"));
-dotenv.config();
-const PORT = process.env.PORT || 8000;
-app_1.default.listen(PORT, () => {
-    (0, index_1.connect_database)();
-    console.log(`App listening to port ${PORT}`);
+const express_1 = __importDefault(require("express"));
+const routes = __importStar(require("./routes/index"));
+const cors_1 = __importDefault(require("cors"));
+let app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to Just a Journal" });
 });
+app.use(routes.authorRoutes);
+app.use(routes.oauthRoutes);
+app.use(routes.loginRoutes);
+app.use(routes.registerRoutes);
+app.use(routes.swaggerRoutes);
+app.use(routes.postRoutes);
+app.use(routes.commentRoutes);
+app.use(routes.categoryRoutes);
+app.use(routes.tagRoutes);
+exports.default = app;

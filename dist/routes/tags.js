@@ -28,25 +28,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.tagRoutes = void 0;
 const express_1 = __importDefault(require("express"));
+const index_1 = require("../controllers/index");
 let router = express_1.default.Router();
 exports.tagRoutes = router;
+const middleware = __importStar(require("../utils/middleware"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 router.route("/tags")
-    .get((req, res) => {
+    .get(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Tags']
     // #swagger.summary = 'Get all the tags'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    (0, index_1.getAllTags)(req, res);
 });
 router.route("/tags/:tagId")
-    .get((req, res) => {
+    .get(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Tags']
     // #swagger.summary = 'Get a tag by id'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    (0, index_1.getTagById)(req, res);
 })
-    .put((req, res) => {
+    .put(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Tags']
     // #swagger.summary = 'Update an existing tag'
+    // #swagger.security = [{"apiKeyAuth": []}]
     /*
    #swagger.parameters['obj'] = {
                  in: 'body',
@@ -55,10 +60,11 @@ router.route("/tags/:tagId")
   
   
   */
-    // getAuthors(req, res);
+    (0, index_1.updateTagById)(req, res);
 })
-    .delete((req, res) => {
+    .delete(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Tags']
     // #swagger.summary = 'Delete a tag'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    (0, index_1.deleteTagById)(req, res);
 });

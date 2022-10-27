@@ -28,14 +28,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.commentRoutes = void 0;
 const express_1 = __importDefault(require("express"));
+const index_1 = require("../controllers/index");
 let router = express_1.default.Router();
 exports.commentRoutes = router;
+const middleware = __importStar(require("../utils/middleware"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+router.route("/:postId/comments")
+    .post(middleware.ensureLogin, (req, res) => {
+    // #swagger.tags = ['Comments']
+    // #swagger.summary = 'Add a comment to a post'
+    // #swagger.security = [{"apiKeyAuth": []}]
+    // #swagger.description ='<p>To access this route, you must provide the access token.</p>'
+    /*
+   #swagger.parameters['obj'] = {
+                 in: 'body',
+                 schema: { $ref: '#/definitions/addComment' }
+         }
+  
+  
+  */
+    (0, index_1.addComment)(req, res);
+});
 router.route("/comments/:commentId")
-    .put((req, res) => {
+    .get(middleware.ensureLogin, (req, res) => {
+    // #swagger.tags = ['Comments']
+    // #swagger.security = [{"apiKeyAuth": []}]
+    // #swagger.summary = 'Get a comment by id'
+    (0, index_1.getCommentById)(req, res);
+})
+    .put(middleware.ensureAuthorizedUpdateDeleteComment, (req, res) => {
     // #swagger.tags = ['Comments']
     // #swagger.summary = 'Update an existing comment'
+    // #swagger.security = [{"apiKeyAuth": []}]
     // #swagger.description ='<p>You can only update comments you've written. So, only a user with valid access token can update their comments.</p>'
     /*
    #swagger.parameters['obj'] = {
@@ -45,18 +70,13 @@ router.route("/comments/:commentId")
   
   
   */
-    // getAuthors(req, res);
+    (0, index_1.updateCommentById)(req, res);
 })
-    .delete((req, res) => {
+    .delete(middleware.ensureAuthorizedUpdateDeleteComment, (req, res) => {
     // #swagger.tags = ['Comments']
     // #swagger.summary = 'Delete a comment'
+    // #swagger.security = [{"apiKeyAuth": []}]
     // #swagger.description ='<p>You can only delete comments you've written. So, only a user with valid access token can delete their comments.</p>'
     // getAuthors(req, res);
-});
-router.route("/comments/:postId")
-    .get((req, res) => {
-    // #swagger.tags = ['Comments']
-    // #swagger.summary = 'Get all the comments for a particular post'
-    // #swagger.description ='<p>Get all the comments for a post by passing in the id of the post.</p>'
-    // getAuthors(req, res);
+    (0, index_1.deleteCommentById)(req, res);
 });

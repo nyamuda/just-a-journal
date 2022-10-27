@@ -18,3 +18,7 @@ __exportStar(require("./oauth"), exports);
 __exportStar(require("./authors"), exports);
 __exportStar(require("./login"), exports);
 __exportStar(require("./register"), exports);
+__exportStar(require("./posts"), exports);
+__exportStar(require("./comments"), exports);
+__exportStar(require("./categories"), exports);
+__exportStar(require("./tags"), exports);

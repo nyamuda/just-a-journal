@@ -28,27 +28,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authorRoutes = void 0;
 const express_1 = __importDefault(require("express"));
+const index_1 = require("../controllers/index");
 let router = express_1.default.Router();
 exports.authorRoutes = router;
+const middleware = __importStar(require("../utils/middleware"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 router.route("/authors")
-    .get((req, res) => {
+    .get(middleware.ensureAdmin, (req, res) => {
     // #swagger.tags = ['Authors']
     // #swagger.summary = 'Get a list of all the authors'
+    // #swagger.security = [{"apiKeyAuth": []}]
     //#swagger.description ='<p><span style="color:red;"><b>Note:</b></span> Only admins have the authority to do this.</p>'
-    // getAuthors(req, res);
+    (0, index_1.getAuthors)(req, res);
 });
 router.route("/authors/:authorId")
-    .get((req, res) => {
+    .get(middleware.ensureRightUser, (req, res) => {
     // #swagger.tags = ['Authors']
     // #swagger.summary = 'Get an author by id'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    //#swagger.description='<p>Only admins or the correct user/author have the authority to do this.</p>'
+    (0, index_1.getAuthorById)(req, res);
 })
-    .put((req, res) => {
+    .put(middleware.ensureRightUser, (req, res) => {
     // #swagger.tags = ['Authors']
     // #swagger.summary = 'Update an existing author'
-    // #swagger.description ='<p>Only an author with valid access token can update their details.</p>'
+    // #swagger.security = [{"apiKeyAuth": []}]
+    // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
     /*
    #swagger.parameters['obj'] = {
                  in: 'body',
@@ -57,11 +63,12 @@ router.route("/authors/:authorId")
   
   
   */
-    // getAuthors(req, res);
+    (0, index_1.updateAuthorById)(req, res);
 })
-    .delete((req, res) => {
+    .delete(middleware.ensureRightUser, (req, res) => {
     // #swagger.tags = ['Authors']
     // #swagger.summary = 'Delete an existing author'
-    // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete an author.</p>'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    // #swagger.description ='<p>Only admins or the correct user/author have the authority to do this.</p>'
+    (0, index_1.deletAuthorById)(req, res);
 });

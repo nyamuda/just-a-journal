@@ -28,25 +28,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.categoryRoutes = void 0;
 const express_1 = __importDefault(require("express"));
+const index_1 = require("../controllers/index");
 let router = express_1.default.Router();
 exports.categoryRoutes = router;
+const middleware = __importStar(require("../utils/middleware"));
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 router.route("/categories")
-    .get((req, res) => {
+    .get(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Categories']
     // #swagger.summary = 'Get all the categories'
-    // getAuthors(req, res);
+    // #swagger.security = [{"apiKeyAuth": []}]
+    (0, index_1.getAllCategories)(req, res);
+})
+    .post(middleware.ensureAdmin, (req, res) => {
+    // #swagger.tags = ['Categories']
+    // #swagger.summary = 'Add a category'
+    // #swagger.security = [{"apiKeyAuth": []}]
+    // #swagger.description ='<p> Only admins have the authority to add a category.</p>'
+    /*
+   #swagger.parameters['obj'] = {
+                 in: 'body',
+                 schema: { $ref: '#/definitions/addCategory' }
+         }
+  
+  
+  */
+    (0, index_1.addCategory)(req, res);
 });
 router.route("/categories/:categoryId")
-    .get((req, res) => {
+    .get(middleware.ensureLogin, (req, res) => {
     // #swagger.tags = ['Categories']
+    // #swagger.security = [{"apiKeyAuth": []}]
     // #swagger.summary = 'Get a category by id'
-    // getAuthors(req, res);
+    (0, index_1.getCategoryById)(req, res);
 })
-    .put((req, res) => {
+    .put(middleware.ensureAdmin, (req, res) => {
     // #swagger.tags = ['Categories']
     // #swagger.summary = 'Update an existing category'
+    // #swagger.security = [{"apiKeyAuth": []}]
     // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to update existing categories.</p>'
     /*
    #swagger.parameters['obj'] = {
@@ -56,11 +76,12 @@ router.route("/categories/:categoryId")
   
   
   */
-    // getAuthors(req, res);
+    (0, index_1.updateCategoryById)(req, res);
 })
-    .delete((req, res) => {
+    .delete(middleware.ensureAdmin, (req, res) => {
     // #swagger.tags = ['Categories']
     // #swagger.summary = 'Delete a category'
+    // #swagger.security = [{"apiKeyAuth": []}]
     // #swagger.description ='<p><span style="color:red"><b>Note:</b></span> Only admins have the authority to delete a category.</p>'
-    // getAuthors(req, res);
+    (0, index_1.deleteCategoryById)(req, res);
 });

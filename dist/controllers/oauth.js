@@ -25,10 +25,12 @@ let loginGithub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!old_author) {
             author_1.Author.create({ name: name, email: email })
                 .then(val => {
+                let id = val.toObject()._id.toString();
                 //create a token
                 let token = (0, functions_1.createJWT)({
                     email: email,
-                    admin: false
+                    admin: false,
+                    author_id: id
                 });
                 return res.json({ token });
             })
@@ -37,9 +39,11 @@ let loginGithub = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         //if the author is already in the database
+        let author_id = old_author.toObject()._id.toString();
         let token = (0, functions_1.createJWT)({
             email: email,
-            admin: false
+            admin: false,
+            author_id
         });
         return res.json({ token });
     }

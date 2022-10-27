@@ -1,25 +1,30 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Post = void 0;
-const mongoose_1 = __importDefault(require("mongoose"));
+exports.postSchema = exports.Post = void 0;
+const mongoose_1 = require("mongoose");
+let authorSchema = new mongoose_1.Schema({
+    name: { type: String },
+    email: { type: String }
+});
+let commentSchema = new mongoose_1.Schema({
+    content: String
+});
 let STATUSES = ["publish", "draft"];
 //create a post schema
-let postSchema = new mongoose_1.default.Schema({
-    title: { type: String },
-    content: { type: String },
-    tags: { type: Array },
-    summary: { type: String },
+let postSchema = new mongoose_1.Schema({
+    title: String,
+    content: String,
+    tags: [String],
+    summary: String,
     status: { type: String, default: "publish", enum: STATUSES },
-    comment_count: { type: Number, default: 0 },
+    comments: [commentSchema],
     like_count: { type: Number, default: 0 },
-    author_id: { type: Number },
-    category: { type: String, default: "miscellaneous" },
+    author: authorSchema,
+    category: { type: String, default: "miscellaneous" }
 }, {
     timestamps: true
 });
+exports.postSchema = postSchema;
 //create post model
-let Post = mongoose_1.default.model("Post", postSchema, "posts");
+let Post = (0, mongoose_1.model)("Post", postSchema, "posts");
 exports.Post = Post;

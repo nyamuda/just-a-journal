@@ -35,12 +35,148 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createJWT = exports.getGithubUser = exports.getGitHubToken = exports.validateRegisterDetails = exports.validateLoginDetails = void 0;
+exports.createJWT = exports.getGithubUser = exports.getGitHubToken = exports.validateRegisterDetails = exports.validateLoginDetails = exports.validateUpdateAuthor = exports.validateUpdateContent = exports.validateContent = exports.validateNameUpdate = exports.validateName = exports.validatePost = exports.validateUpdatePost = exports.addNewTags = exports.getIdFromToken = void 0;
 const dotenv = __importStar(require("dotenv"));
 const axios_1 = __importDefault(require("axios"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const joi_1 = __importDefault(require("joi"));
 dotenv.config();
+//get the id of the user from the token
+let getIdFromToken = (req, res) => {
+    let header_value = req.body.token || req.headers.authorization;
+    let decoded = jsonwebtoken_1.default.decode(header_value);
+    return decoded.author_id;
+    // jwt.verify(header_value, process.env.SECRET!, (err: any, decoded: any) => {
+    //     if (err) {
+    //         return { error: true, message: err };
+    //     }
+    //     return decoded.author_id;
+    // });
+};
+exports.getIdFromToken = getIdFromToken;
+//add new tags to the database
+let addNewTags = (old_tags, new_tags) => {
+    let tags_to_add = [];
+    //before adding the new tags
+    //check to see if they don't already exist
+    new_tags.forEach(new_tag => {
+        if (old_tags.includes(new_tag)) {
+            return;
+        }
+        tags_to_add.push({ name: new_tag });
+    });
+    return tags_to_add;
+};
+exports.addNewTags = addNewTags;
+let validateUpdatePost = (author) => {
+    let schema = joi_1.default.object({
+        title: joi_1.default.string().min(3),
+        content: joi_1.default.string().min(3),
+        tags: joi_1.default.array(),
+        summary: joi_1.default.string().min(3),
+        status: joi_1.default.string().valid('draft', 'publish'),
+        category: joi_1.default.string(),
+    });
+    let { value, error } = schema.validate(author);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateUpdatePost = validateUpdatePost;
+let validatePost = (post) => {
+    let schema = joi_1.default.object({
+        title: joi_1.default.string().min(3).required(),
+        content: joi_1.default.string().min(3).required(),
+        tags: joi_1.default.array(),
+        summary: joi_1.default.string().min(3),
+        status: joi_1.default.string().valid('draft', 'publish'),
+        category: joi_1.default.string()
+    });
+    let { value, error } = schema.validate(post);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validatePost = validatePost;
+let validateName = (comment) => {
+    let schema = joi_1.default.object({
+        name: joi_1.default.string().min(3).required()
+    });
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateName = validateName;
+let validateNameUpdate = (comment) => {
+    let schema = joi_1.default.object({
+        name: joi_1.default.string().min(3).required()
+    });
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateNameUpdate = validateNameUpdate;
+let validateContent = (comment) => {
+    let schema = joi_1.default.object({
+        content: joi_1.default.string().min(3).required()
+    });
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateContent = validateContent;
+let validateUpdateContent = (comment) => {
+    let schema = joi_1.default.object({
+        content: joi_1.default.string().min(3)
+    });
+    let { value, error } = schema.validate(comment);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateUpdateContent = validateUpdateContent;
+let validateUpdateAuthor = (author) => {
+    let schema = joi_1.default.object({
+        name: joi_1.default.string().min(2),
+        email: joi_1.default.string().email()
+    });
+    let { value, error } = schema.validate(author);
+    if (error) {
+        return { error: true, message: error.details[0].message };
+    }
+    return {
+        error: false,
+        message: "No errors"
+    };
+};
+exports.validateUpdateAuthor = validateUpdateAuthor;
 let validateLoginDetails = (email, password) => {
     let schema = joi_1.default.object({
         email: joi_1.default.string().email().required(),
@@ -59,7 +195,7 @@ let validateLoginDetails = (email, password) => {
 exports.validateLoginDetails = validateLoginDetails;
 let validateRegisterDetails = (name, email, password) => {
     let schema = joi_1.default.object({
-        name: joi_1.default.string().required(),
+        name: joi_1.default.string().required().min(2),
         email: joi_1.default.string().email().required(),
         password: joi_1.default.string().required().min(8)
     });

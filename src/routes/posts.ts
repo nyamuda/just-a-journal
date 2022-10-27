@@ -13,7 +13,7 @@ dotenv.config();
 
 
 router.route("/posts")
-    .get(middleware.ensureLogin, (req: Request, res: Response) => {
+    .get((req: Request, res: Response) => {
         // #swagger.tags = ['Posts']
         // #swagger.security = [{"apiKeyAuth": []}]
         // #swagger.summary = 'Get all the posts'

@@ -6,10 +6,10 @@
     "description": "A public API to manage your blogs",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "just-a-journal.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "oAuthGithub": {

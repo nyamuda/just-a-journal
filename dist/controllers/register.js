@@ -56,12 +56,13 @@ let registerAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     //add the  user to the database
     models_1.Author.create({ name, email, password: hashed_password })
         .then(val => {
+        let id = val.toObject()._id.toString();
         //create an access token
-        let token = (0, functions_1.createJWT)({ email, admin: false });
+        let token = (0, functions_1.createJWT)({ email, admin: false, author_id: id });
         return res.status(201).json({ token });
     })
         .catch(err => {
-        return res.json({ message: "Sorry, registration failed.", error: err });
+        return res.status(500).json({ message: "Sorry, registration failed.", error: err });
     });
 });
 exports.registerAuthor = registerAuthor;

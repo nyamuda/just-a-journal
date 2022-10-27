@@ -30,22 +30,17 @@ const doc = {
         addPost: {
             $title: "Title of the post",
             $content: "The content of the post",
-            tags: ["medicine", "technology", "economics"],
-            summary: "A brief summary of the post",
-            status: "publish or draft. The default is 'publish'",
-            category: "The category in which the post belongs. The default is 'miscellaneous'",
+            tags: ["science", "medicine"],
+            summary: "",
+            status: "",
+            category: ""
         },
         updatePost: {
             title: "Title of the post",
-            content: "The content of the post",
-            tags: ["medicine", "technology", "economics"],
-            summary: "A brief summary of the post",
-            status: "publish or draft",
-            category: "The category in which the post belongs.",
+            content: "The content of the post"
         },
         addComment: {
-            $content: "The comment",
-            $post_id: 12345
+            $content: "The comment"
         },
         updateComment: {
             $content: "The comment",
@@ -65,14 +60,19 @@ const doc = {
         loginUser: {
             $email: "email@example.com",
             $password: "helloworld"
-        },
-        tags: ["medicine", "technology", "economics"],
+        }
     },
     securityDefinitions: {
         oAuthGithub: {
             type: 'oauth2',
             authorizationUrl: 'just-a-journal.onrender.com/oauth/github',
             flow: 'implicit',
+        },
+        apiKeyAuth: {
+            type: "apiKey",
+            name: "authorization",
+            in: "header",
+            description: "The token for authentication"
         }
     }
 };

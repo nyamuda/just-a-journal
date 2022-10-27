@@ -58,7 +58,8 @@ let loginAuthor = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     //if there are no errors
     //create and access token
-    let token = (0, functions_1.createJWT)({ email: email, admin: false });
+    let author_id = old_author.toObject()._id.toString();
+    let token = (0, functions_1.createJWT)({ email: email, admin: old_author.admin, author_id });
     return res.json({ token });
 });
 exports.loginAuthor = loginAuthor;
