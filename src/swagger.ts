@@ -9,7 +9,7 @@ const doc = {
     info: {
         title: 'Just a Journal',
         "swagger": "2.0",
-        description: 'A public API to manage your blogs'
+        description: '<p>A public API to manage your blogs.</p><p>To gain access to routes that can only be accessed by administrators, use the login information below to obtain the admin access token.</p><code>{"email": "admin@example.com","password": "helloworld"}</code>'
     },
     // host: 'localhost:3000',
     // schemes: ['http'],
