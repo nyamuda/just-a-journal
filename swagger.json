@@ -3,7 +3,7 @@
   "info": {
     "title": "Just a Journal",
     "swagger": "2.0",
-    "description": "<p>A public API to manage your blogs.</p><p>To gain access to routes that can only be accessed by administrators, use the login information below to obtain the admin access token.</p><code>{\"email\": \"admin@example.com\",\"password\": \"helloworld\"}</code>",
+    "description": `<p>To access the API routes, please authenticate by providing a JSON Web Token (JWT). Simply click the "Authorize" button below and enter the token in the "apiKeyAuth (apiKey)" field. If you don't have a token yet, kindly register to obtain one. In case your token has expired, log in to generate a fresh token. For OAUTH testing, you can try entering the following URL in your browser: "https://just-a-journal.onrender.com/oauth/github".</p>`,
     "version": "1.0.0"
   },
   "host": "just-a-journal.onrender.com",
